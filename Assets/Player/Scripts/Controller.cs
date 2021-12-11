@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -81,6 +82,11 @@ namespace Player.Scripts
                 //enemy.SendMessage("ApplyDamage", 20f);
                 print("hitanul");
             }
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireSphere(attackPoint.position, attackRange);
         }
     }
 }
