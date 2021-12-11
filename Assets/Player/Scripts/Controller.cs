@@ -45,7 +45,7 @@ namespace Player.Scripts
             var scaledMoveSpeed = moveSpeed * Time.deltaTime;
             
             var move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * new Vector3(direction.x, 0, direction.y);
-            transform.position += move * scaledMoveSpeed;
+            GetComponent<CharacterController>().Move(move * scaledMoveSpeed);
         }
 
         private void Look(Vector2 rotate)
