@@ -78,9 +78,7 @@ namespace Player.Scripts
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
             foreach (var enemy in hitEnemies)
             {
-                // TODO uncomment when how apply system
-                //enemy.SendMessage("ApplyDamage", 20f);
-                print("hitanul");
+                enemy.GetComponentInChildren<Enemies.Scripts.Healthbar>().SendMessage("TakeDamage", 20f);
             }
         }
 

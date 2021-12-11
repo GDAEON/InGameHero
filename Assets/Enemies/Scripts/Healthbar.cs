@@ -92,7 +92,7 @@ namespace Enemies.Scripts
                 UpdateHealth();
             }
             
-            transform.LookAt(_camera.transform);
+            transform.LookAt(_camera.transform, Vector3.down);
         }
 
         // Set the health bar to display the same health value as the health variable:
