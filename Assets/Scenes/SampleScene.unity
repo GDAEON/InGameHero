@@ -447,6 +447,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1095380733}
+    - target: {fileID: 5734572710081954256, guid: c3a89bcff818bde45b6aa65feee6d7ca, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5b514bdaed7a5554f854a8e0b41c69f8, type: 2}
     - target: {fileID: 5734572710081954258, guid: c3a89bcff818bde45b6aa65feee6d7ca, type: 3}
       propertyPath: m_Name
       value: Enemy
