@@ -461,6 +461,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c60e0974-d140-4597-a40e-9862193067e9
     m_ActionName: gameplay/look[/XboxGamepadMacOS/rightStick,/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 682678562}
+        m_TargetAssemblyTypeName: Player.Scripts.Controller, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 40d994f9-166f-495b-89cd-59d585c8e833
+    m_ActionName: gameplay/Attack[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: gameplay

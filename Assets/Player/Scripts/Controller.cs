@@ -25,6 +25,11 @@ namespace Player.Scripts
             _mLook = context.ReadValue<Vector2>();
         }
 
+        public void OnAttack(InputAction.CallbackContext context)
+        {
+            Attack();
+        }
+
         private void Start()
         {
             _camera = Camera.main;
@@ -59,6 +64,12 @@ namespace Player.Scripts
             _mRotation.y += rotate.x * scaledRotateSpeed;
             _mRotation.x = Mathf.Clamp(_mRotation.x - rotate.y * scaledRotateSpeed, -89, 89);
             _camera.transform.localEulerAngles = _mRotation;
+        }
+
+        private void Attack()
+        {
+            //TODO add attack actions
+            print("Attacked");
         }
     }
 }
