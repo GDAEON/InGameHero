@@ -8,6 +8,11 @@ namespace Player.Scripts
         [Header("Player settings")]
         [SerializeField] private float moveSpeed;
         [SerializeField] private float cameraSensitivity;
+        
+        [Header("Fight settings")]
+        [SerializeField] private LayerMask enemyLayer;
+        [SerializeField] private Transform attackPoint;
+        [SerializeField] private float attackRange;
 
         private Camera _camera;
         private bool _mCharging;
@@ -27,7 +32,7 @@ namespace Player.Scripts
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            Attack();
+            if(context.phase == InputActionPhase.Started) Attack();
         }
 
         private void Start()
@@ -68,8 +73,14 @@ namespace Player.Scripts
 
         private void Attack()
         {
-            //TODO add attack actions
-            print("Attacked");
+            // ReSharper disable once Unity.PreferNonAllocApi
+            var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
+            foreach (var enemy in hitEnemies)
+            {
+                // TODO uncomment when how apply system
+                //enemy.SendMessage("ApplyDamage", 20f);
+                print("hitanul");
+            }
         }
     }
 }
