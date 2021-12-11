@@ -1,4 +1,4 @@
-using System;
+using Enemies.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +14,8 @@ namespace Player.Scripts
         [SerializeField] private LayerMask enemyLayer;
         [SerializeField] private Transform attackPoint;
         [SerializeField] private float attackRange;
+        [SerializeField] private Healthbar healthBar;
+        [SerializeField] private Healthbar staminaBar;
 
         private Camera _camera;
         private bool _mCharging;
@@ -33,7 +35,11 @@ namespace Player.Scripts
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if(context.phase == InputActionPhase.Started) Attack();
+            if (context.phase == InputActionPhase.Started && staminaBar.health >= 25)
+            {
+                Attack();
+                staminaBar.TakeDamage(25);
+            }
         }
 
         private void Start()
@@ -78,7 +84,7 @@ namespace Player.Scripts
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
             foreach (var enemy in hitEnemies)
             {
-                enemy.GetComponentInChildren<Enemies.Scripts.Healthbar>().SendMessage("TakeDamage", 20f);
+                enemy.GetComponentInChildren<EnemyBar>().SendMessage("TakeDamage", 20f);
             }
         }
 
