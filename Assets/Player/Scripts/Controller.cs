@@ -9,6 +9,7 @@ namespace Player.Scripts
         [Header("Player settings")]
         [SerializeField] private float moveSpeed;
         [SerializeField] private float cameraSensitivity;
+        [SerializeField]private float gravity = -9.81f;
         
         [Header("Fight settings")]
         [SerializeField] private LayerMask enemyLayer;
@@ -16,12 +17,14 @@ namespace Player.Scripts
         [SerializeField] private float attackRange;
         [SerializeField] private Healthbar healthBar;
         [SerializeField] private Healthbar staminaBar;
-
+        
+        private CharacterController _controller;
         private Camera _camera;
         private bool _mCharging;
         private Vector2 _mRotation;
         private Vector2 _mLook;
         private Vector2 _mMove;
+        private Vector3 _velocity = Vector3.zero;
 
         public void OnMove(InputAction.CallbackContext context)
         {
@@ -45,6 +48,7 @@ namespace Player.Scripts
         private void Start()
         {
             _camera = Camera.main;
+            _controller = GetComponent<CharacterController>();
 
             // Lock cursor
             Cursor.lockState = CursorLockMode.Locked;
@@ -56,6 +60,9 @@ namespace Player.Scripts
         {
             Look(_mLook);
             Move(_mMove);
+            
+            _velocity.y += gravity * Time.deltaTime;
+            _controller.Move(_velocity * Time.deltaTime); 
         }
 
         private void Move(Vector2 direction)
@@ -64,8 +71,10 @@ namespace Player.Scripts
                 return;
             var scaledMoveSpeed = moveSpeed * Time.deltaTime;
             
-            var move = Quaternion.Euler(0, _camera.transform.eulerAngles.y, 0) * new Vector3(direction.x, 0, direction.y);
-            GetComponent<CharacterController>().Move(move * scaledMoveSpeed);
+            var move = Quaternion.Euler(0, _camera.transform.eulerAngles.y, 0) *
+                       new Vector3(direction.x, 0, direction.y);
+            
+            _controller.Move(move * scaledMoveSpeed);
         }
 
         private void Look(Vector2 rotate)
