@@ -9,7 +9,8 @@ namespace Player.Scripts
         [Header("Player settings")]
         [SerializeField] private float moveSpeed;
         [SerializeField] private float cameraSensitivity;
-        [SerializeField]private float gravity = -9.81f;
+        [SerializeField]private float gravity = 9.81f;
+        [SerializeField]private float jumpPower;
         
         [Header("Fight settings")]
         [SerializeField] private LayerMask enemyLayer;
@@ -28,12 +29,13 @@ namespace Player.Scripts
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            _mMove = context.ReadValue<Vector2>();
+            if(_controller.isGrounded)
+             _mMove = context.ReadValue<Vector2>();
         }
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            if (context.phase == InputActionPhase.Started)
+            if (context.phase == InputActionPhase.Started && _controller.isGrounded)
             {
                 Jump();
             }
@@ -69,7 +71,7 @@ namespace Player.Scripts
             Look(_mLook);
             Move(_mMove);
             
-            _velocity.y += gravity * Time.deltaTime;
+            _velocity.y -= gravity * Time.deltaTime;
             _controller.Move(_velocity * Time.deltaTime); 
         }
 
@@ -87,8 +89,7 @@ namespace Player.Scripts
 
         private void Jump()
         {
-            // TODO write jump action
-            print("Jumped");
+            _velocity.y = jumpPower;
         }
 
         private void Look(Vector2 rotate)

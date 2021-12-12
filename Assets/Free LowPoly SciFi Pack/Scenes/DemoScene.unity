@@ -429,17 +429,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!114 &1731916676 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4940206568337114948, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
-  m_PrefabInstance: {fileID: 1911817291}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c66e505555113ef488bd9395668f18e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1738700811 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1861741370882616, guid: 1e4f0d9e7dbf221419b0bd0e1286aa16, type: 3}
@@ -497,9 +486,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1314230868, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
-      propertyPath: weight
-      value: 0
+    - target: {fileID: 4940206568337114948, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
+      propertyPath: gravity
+      value: 9.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 4940206568337114948, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
+      propertyPath: jumpPower
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4940206568337114951, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
       propertyPath: m_RootOrder
@@ -544,50 +537,6 @@ PrefabInstance:
     - target: {fileID: 4940206568337114951, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4940206568337115000, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
-      propertyPath: m_DefaultActionMap
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4940206568337115000, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
-      propertyPath: m_ActionEvents.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4940206568337115000, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_ActionId
-      value: be7834c2-c3d1-4912-821e-e55aaec507ae
-      objectReference: {fileID: 0}
-    - target: {fileID: 4940206568337115000, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_ActionName
-      value: Player/Jump[/Keyboard/space]
-      objectReference: {fileID: 0}
-    - target: {fileID: 4940206568337115000, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4940206568337115000, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4940206568337115000, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1731916676}
-    - target: {fileID: 4940206568337115000, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4940206568337115000, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnJump
-      objectReference: {fileID: 0}
-    - target: {fileID: 4940206568337115000, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Player.Scripts.Controller, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4940206568337115000, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4940206568337115003, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
       propertyPath: m_Name
