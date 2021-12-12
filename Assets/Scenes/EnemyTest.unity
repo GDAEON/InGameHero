@@ -558,6 +558,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 445501664065287801, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
+      propertyPath: m_CullingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 445501664065287801, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 788082342254297921, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
       propertyPath: m_Name
       value: Default
@@ -621,6 +629,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3feb0cf1103bde41a95b8fb8abc0d36, type: 3}
+--- !u!1 &5093024623504203252 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8341478338834653041, guid: d3feb0cf1103bde41a95b8fb8abc0d36, type: 3}
+  m_PrefabInstance: {fileID: 3849712037648384645}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5613136901322655567
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5093024623504203252}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 713c0df334e1ca141a19ba6809ac9acf, type: 3}
+  m_Controller: {fileID: 9100000, guid: a5dbf496698e6a541bd607448ae58ff2, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &6974005974755751983
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -676,5 +709,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8899680030681849855, guid: 2635fb0e967d4c244ac0c99283335b66, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a5dbf496698e6a541bd607448ae58ff2, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2635fb0e967d4c244ac0c99283335b66, type: 3}
