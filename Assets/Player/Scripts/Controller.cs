@@ -29,8 +29,10 @@ namespace Player.Scripts
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            if(_controller.isGrounded)
-             _mMove = context.ReadValue<Vector2>();
+            if (_controller.isGrounded)
+            {
+                _mMove = context.ReadValue<Vector2>();
+            }
         }
 
         public void OnJump(InputAction.CallbackContext context)
@@ -70,6 +72,8 @@ namespace Player.Scripts
         {
             Look(_mLook);
             Move(_mMove);
+            
+            //TODO fix jump
             
             _velocity.y -= gravity * Time.deltaTime;
             _controller.Move(_velocity * Time.deltaTime); 
