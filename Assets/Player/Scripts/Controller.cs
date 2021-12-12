@@ -31,6 +31,14 @@ namespace Player.Scripts
             _mMove = context.ReadValue<Vector2>();
         }
 
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            if (context.phase == InputActionPhase.Started)
+            {
+                Jump();
+            }
+        }
+
         public void OnLook(InputAction.CallbackContext context)
         {
             _mLook = context.ReadValue<Vector2>();
@@ -75,6 +83,12 @@ namespace Player.Scripts
                        new Vector3(direction.x, 0, direction.y);
             
             _controller.Move(move * scaledMoveSpeed);
+        }
+
+        private void Jump()
+        {
+            // TODO write jump action
+            print("Jumped");
         }
 
         private void Look(Vector2 rotate)
