@@ -25,12 +25,12 @@ namespace Player.Scripts
         private Vector2 _mRotation;
         private Vector2 _mLook;
         private Vector2 _mMove;
+        private Vector2 _mMoveInAir;
         private Vector3 _velocity = Vector3.zero;
 
         public void OnMove(InputAction.CallbackContext context)
-        {
-            if(_controller.isGrounded)
-             _mMove = context.ReadValue<Vector2>();
+        { 
+            _mMove = context.ReadValue<Vector2>();
         }
 
         public void OnJump(InputAction.CallbackContext context)
@@ -69,8 +69,12 @@ namespace Player.Scripts
         public void Update()
         {
             Look(_mLook);
-            Move(_mMove);
-            
+            Move(_controller.isGrounded ? _mMove : _mMoveInAir);
+            ApplyGravity();
+        }
+
+        private void ApplyGravity()
+        {
             _velocity.y -= gravity * Time.deltaTime;
             _controller.Move(_velocity * Time.deltaTime); 
         }
@@ -89,6 +93,7 @@ namespace Player.Scripts
 
         private void Jump()
         {
+            _mMoveInAir = _mMove;
             _velocity.y = jumpPower;
         }
 
