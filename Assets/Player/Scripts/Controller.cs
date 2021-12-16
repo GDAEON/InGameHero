@@ -1,3 +1,4 @@
+using System;
 using Enemies.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -25,7 +26,6 @@ namespace Player.Scripts
         private Vector2 _mRotation;
         private Vector2 _mLook;
         private Vector2 _mMove;
-        private Vector2 _mMoveInAir;
         private Vector3 _velocity = Vector3.zero;
 
         public void OnMove(InputAction.CallbackContext context)
@@ -69,14 +69,31 @@ namespace Player.Scripts
         public void Update()
         {
             Look(_mLook);
-            Move(_controller.isGrounded ? _mMove : _mMoveInAir);
+            if (_controller.isGrounded)
+            {
+                Move(_mMove);
+            }
+            
             ApplyGravity();
         }
 
         private void ApplyGravity()
         {
+            
+            if(Math.Abs(_velocity.y - jumpPower) > 0.01f && _controller.isGrounded) 
+            {
+                _velocity = Vector3.zero;
+                return;
+            }
+            
+            var move = Quaternion.Euler(0, _camera.transform.eulerAngles.y, 0) *
+                       new Vector3(_mMove.x, 0, _mMove.y);
+            
+            _velocity.x = move.x * moveSpeed;
+            _velocity.z = move.z * moveSpeed;
+
             _velocity.y -= gravity * Time.deltaTime;
-            _controller.Move(_velocity * Time.deltaTime); 
+            _controller.Move(_velocity * Time.deltaTime);    
         }
 
         private void Move(Vector2 direction)
@@ -88,12 +105,11 @@ namespace Player.Scripts
             var move = Quaternion.Euler(0, _camera.transform.eulerAngles.y, 0) *
                        new Vector3(direction.x, 0, direction.y);
             
-            _controller.Move(move * scaledMoveSpeed);
+            _controller.Move(move * (scaledMoveSpeed * Time.deltaTime));
         }
 
         private void Jump()
         {
-            _mMoveInAir = _mMove;
             _velocity.y = jumpPower;
         }
 
