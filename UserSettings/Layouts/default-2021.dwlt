@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Inspector
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 471}
   m_MaxSize: {x: 10000, y: 10000}
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: GameView
+  m_Name: SceneView
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -271,14 +271,14 @@ MonoBehaviour:
     height: 646
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 19}
+  m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
   - {fileID: 19}
   - {fileID: 13}
   - {fileID: 12}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1275,21 +1275,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\UnityProjects\InGameHero
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: 2e6d0000
-    m_LastClickedID: 27950
+    scrollPos: {x: 0, y: 132}
+    m_SelectedIDs: be6e0000
+    m_LastClickedID: 28350
     m_ExpandedIDs: 000000002e6d0000306d0000326d0000346d0000366d0000386d00003a6d00003c6d00003e6d0000406d0000426d0000446d0000466d000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1446,9 +1446,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: fae7ffffeefaffff
+      m_SelectedIDs: 14e4ffff
+      m_LastClickedID: -7148
+      m_ExpandedIDs: d2e6ffff52eaffff8ceeffff18f6fffff0faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1697,9 +1697,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.97767717, y: 10.090185, z: -4.509765}
+    m_Target: {x: 2.1592767, y: 1.4571321, z: -8.348622}
     speed: 2
-    m_Value: {x: 0.97767717, y: 10.090185, z: -4.509765}
+    m_Value: {x: 2.1592767, y: 1.4571321, z: -8.348622}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1746,13 +1746,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.14517744, y: -0.3420187, z: 0.053681884, w: -0.92689246}
+    m_Target: {x: -0.04552182, y: 0.8712086, z: -0.08197969, w: -0.48194838}
     speed: 2
-    m_Value: {x: -0.14517274, y: -0.34200764, z: 0.053680148, w: -0.92686254}
+    m_Value: {x: -0.045150843, y: 0.8733373, z: -0.082180776, w: -0.47800598}
   m_Size:
-    m_Target: 0.05105396
+    m_Target: 1.8308991
     speed: 2
-    m_Value: 0.05105396
+    m_Value: 1.8308991
   m_Ortho:
     m_Target: 0
     speed: 2
