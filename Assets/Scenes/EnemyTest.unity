@@ -596,6 +596,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1878596318784076673, guid: d3feb0cf1103bde41a95b8fb8abc0d36, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878596319510547175, guid: d3feb0cf1103bde41a95b8fb8abc0d36, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384406719028954793, guid: d3feb0cf1103bde41a95b8fb8abc0d36, type: 3}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 4212439491921548205, guid: 146bcd2243822874aaafa2ce28d25548, type: 3}
     - target: {fileID: 7068492530886531884, guid: d3feb0cf1103bde41a95b8fb8abc0d36, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -643,6 +655,10 @@ PrefabInstance:
     - target: {fileID: 7589555126836003222, guid: d3feb0cf1103bde41a95b8fb8abc0d36, type: 3}
       propertyPath: m_Name
       value: kunaiEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7589555126836003222, guid: d3feb0cf1103bde41a95b8fb8abc0d36, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3feb0cf1103bde41a95b8fb8abc0d36, type: 3}
