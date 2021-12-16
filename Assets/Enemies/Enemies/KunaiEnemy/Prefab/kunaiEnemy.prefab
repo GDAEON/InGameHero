@@ -1279,6 +1279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kunai: {fileID: 8070056793200378745}
+  projectile: {fileID: 4212439491921548205, guid: 146bcd2243822874aaafa2ce28d25548, type: 3}
 --- !u!1 &8176786475168702672
 GameObject:
   m_ObjectHideFlags: 0
@@ -1513,6 +1514,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4644934466732093395}
     m_Modifications:
+    - target: {fileID: -3487734562037425613, guid: 146bcd2243822874aaafa2ce28d25548, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3548352493006080279, guid: 146bcd2243822874aaafa2ce28d25548, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1591,6 +1596,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 91066477571689220}
     m_Modifications:
+    - target: {fileID: -3487734562037425613, guid: 146bcd2243822874aaafa2ce28d25548, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3548352493006080279, guid: 146bcd2243822874aaafa2ce28d25548, type: 3}
       propertyPath: m_RootOrder
       value: 0
