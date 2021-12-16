@@ -17,8 +17,8 @@ namespace Player.Scripts
         [SerializeField] private LayerMask enemyLayer;
         [SerializeField] private Transform attackPoint;
         [SerializeField] private float attackRange;
-        [SerializeField] private Healthbar healthBar;
-        [SerializeField] private Healthbar staminaBar;
+        [SerializeField] private PlayerBar healthBar;
+        [SerializeField] private PlayerBar staminaBar;
         
         private CharacterController _controller;
         private Camera _camera;
@@ -111,6 +111,7 @@ namespace Player.Scripts
         private void Jump()
         {
             _velocity.y = jumpPower;
+            staminaBar.TakeDamage(15);
         }
 
         private void Look(Vector2 rotate)
