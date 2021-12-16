@@ -14,6 +14,7 @@ namespace Player.Scripts
         [SerializeField]private float jumpPower;
         
         [Header("Fight settings")]
+        [SerializeField] private float damage;
         [SerializeField] private LayerMask enemyLayer;
         [SerializeField] private Transform attackPoint;
         [SerializeField] private float attackRange;
@@ -130,7 +131,7 @@ namespace Player.Scripts
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
             foreach (var enemy in hitEnemies)
             {
-                enemy.GetComponentInChildren<EnemyBar>().SendMessage("TakeDamage", 20f);
+                enemy.GetComponentInChildren<EnemyBar>().SendMessage("TakeDamage", damage);
             }
         }
 
