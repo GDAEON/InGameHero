@@ -2,6 +2,8 @@ using System;
 using Enemies.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Serialization;
 
 namespace Player.Scripts
 {
@@ -20,6 +22,10 @@ namespace Player.Scripts
         [SerializeField] private float attackRange;
         [SerializeField] private PlayerBar healthBar;
         [SerializeField] private PlayerBar staminaBar;
+
+        [Header("Bodies")]
+        [SerializeField] private GameObject[] bodiesPrefabs;
+        
         
         private CharacterController _controller;
         private Camera _camera;
@@ -28,6 +34,7 @@ namespace Player.Scripts
         private Vector2 _mLook;
         private Vector2 _mMove;
         private Vector3 _velocity = Vector3.zero;
+        private static readonly int Agony = Animator.StringToHash("Agony");
 
         public void OnMove(InputAction.CallbackContext context)
         { 
@@ -133,6 +140,35 @@ namespace Player.Scripts
             {
                 enemy.GetComponentInChildren<EnemyBar>().SendMessage("TakeDamage", damage);
             }
+        }
+
+        private void Transmit()
+        {
+            // ReSharper disable once Unity.PreferNonAllocApi
+            var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
+            foreach (var enemy in hitEnemies)
+            {
+                if (enemy.CompareTag("DefaultEnemy"))
+                {
+                    SpawnBody(0, enemy.transform);                    
+                }
+                else if(enemy.CompareTag("KunaiEnemy"))
+                {
+                    SpawnBody(1, enemy.transform); 
+                }
+                else if (enemy.CompareTag("TankEnemy"))
+                {
+                    SpawnBody(2, enemy.transform); 
+                }
+            }
+        }
+
+        private void SpawnBody(int body, Transform enemy)
+        {
+            GetComponentInChildren<PostProcessVolume>().gameObject.GetComponent<Animator>().SetTrigger(Agony);
+            var enemyTransform = enemy.transform;
+            Instantiate(bodiesPrefabs[body], enemyTransform.position, enemyTransform.rotation);
+            Destroy(gameObject);  
         }
 
         private void OnDrawGizmosSelected()
