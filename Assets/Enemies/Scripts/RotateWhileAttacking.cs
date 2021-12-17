@@ -19,9 +19,10 @@ public class RotateWhileAttacking : MonoBehaviour
     {
         if (_animator.GetBool("Attack"))
         {
+            Debug.Log(transform.rotation + " game object transform");
             transform.rotation = Quaternion.RotateTowards(transform.rotation,
                 Quaternion.LookRotation(_playerTransform.position - transform.position),
-                rotationSpeed * Time.deltaTime);
+               rotationSpeed * Time.deltaTime);
         }
     }
 }

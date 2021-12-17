@@ -16,11 +16,12 @@ public class ChaseBehavior : StateMachineBehaviour
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        animator.SetInteger("Chance", Random.Range(0, 10));
         _agent.destination = _playerTransform.position;
         animator.SetFloat("Speed", _agent.velocity.magnitude);
+        animator.SetFloat("RangeToPlayer", Vector3.Distance(animator.transform.position, _playerTransform.position));
         if (Vector3.Distance(animator.transform.position, _playerTransform.position) <= attackRange)
-        { 
-            animator.SetInteger("AttackIndex", Random.Range(0, 10));
+        {
             animator.SetBool("Attack", true);
         }
         
