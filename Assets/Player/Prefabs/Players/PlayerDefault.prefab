@@ -561,7 +561,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7740996277505272219}
   - component: {fileID: 7740996277505272217}
-  - component: {fileID: 7740996277505272218}
   m_Layer: 3
   m_Name: ArmCamera
   m_TagString: Untagged
@@ -628,14 +627,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7740996277505272218
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7740996277505272220}
-  m_Enabled: 1
 --- !u!1 &7740996278127066013
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,7 +1192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8584875811530073020, guid: af9e9c290586ab24fa5e57a099624c2f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.368
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8584875811530073020, guid: af9e9c290586ab24fa5e57a099624c2f, type: 3}
       propertyPath: m_LocalPosition.z
