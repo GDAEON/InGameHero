@@ -63,6 +63,12 @@ namespace Player.Scripts
             }
         }
 
+        public void OnAgony(InputAction.CallbackContext context)
+        {
+            if (context.phase == InputActionPhase.Started)
+                Transmit();
+        }
+
         private void Start()
         {
             _camera = Camera.main;
@@ -144,31 +150,40 @@ namespace Player.Scripts
 
         private void Transmit()
         {
+            var animator = GetComponentInChildren<PostProcessVolume>().gameObject.GetComponent<Animator>();
             // ReSharper disable once Unity.PreferNonAllocApi
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
             foreach (var enemy in hitEnemies)
             {
+                print(enemy.tag);
                 if (enemy.CompareTag("DefaultEnemy"))
                 {
-                    SpawnBody(0, enemy.transform);                    
+                    print("О этот дефолтный");
+                    animator.SetTrigger(Agony);
+                    SpawnBody(0, enemy.transform);  
+                    Destroy(gameObject, 2);
                 }
                 else if(enemy.CompareTag("KunaiEnemy"))
                 {
+                    print("О этот с кунаями");
+                    animator.SetTrigger(Agony);
                     SpawnBody(1, enemy.transform); 
+                    Destroy(gameObject, 2);
                 }
                 else if (enemy.CompareTag("TankEnemy"))
                 {
-                    SpawnBody(2, enemy.transform); 
+                    print("О этот танк");
+                    animator.SetTrigger(Agony);
+                    SpawnBody(2, enemy.transform);
+                    Destroy(gameObject, 2);
                 }
             }
         }
 
         private void SpawnBody(int body, Transform enemy)
         {
-            GetComponentInChildren<PostProcessVolume>().gameObject.GetComponent<Animator>().SetTrigger(Agony);
             var enemyTransform = enemy.transform;
             Instantiate(bodiesPrefabs[body], enemyTransform.position, enemyTransform.rotation);
-            Destroy(gameObject);  
         }
 
         private void OnDrawGizmosSelected()
