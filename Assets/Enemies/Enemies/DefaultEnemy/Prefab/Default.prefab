@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 967323072}
   - component: {fileID: 7343694447896412323}
   - component: {fileID: 967323067}
+  - component: {fileID: 967323080}
   m_Layer: 6
   m_Name: Default
   m_TagString: Untagged
@@ -302,9 +303,10 @@ MonoBehaviour:
   material: {fileID: 0}
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
-  attackPoint: {fileID: 0}
-  attackRange: 0
+    m_Bits: 8
+  attackPoint:
+  - {fileID: 5654718034698064954}
+  attackRange: 0.63
 --- !u!114 &967323067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,7 +320,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillName: JumpAttack
-  coolDownTime: 7
+  coolDownTime: 10
+  coolDown: 0
+--- !u!114 &967323080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788082342254297921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e62056a857a464b94d94f7efa291ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: SpinAttack
+  coolDownTime: 10
   coolDown: 0
 --- !u!1 &1286735123440995987
 GameObject:

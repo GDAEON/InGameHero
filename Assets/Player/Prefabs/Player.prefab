@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1314230867}
   - component: {fileID: 1314230868}
   - component: {fileID: 1314230869}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Agony
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1801797716
 Transform:
   m_ObjectHideFlags: 0
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  cameraSensitivity: 15
+  cameraSensitivity: 10
   gravity: 9.81
   jumpPower: 5
   damage: 20
@@ -217,6 +217,7 @@ MonoBehaviour:
   attackRange: 0.84
   healthBar: {fileID: 1990478744}
   staminaBar: {fileID: 976726009}
+  bodiesPrefabs: []
 --- !u!114 &4940206568337115000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,6 +307,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: be7834c2-c3d1-4912-821e-e55aaec507ae
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 97cc4a5a-5672-4390-9062-aa864b9d229b
+    m_ActionName: Player/Transmit[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -322,13 +327,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 4
+  m_Radius: 1
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4940206569139989750
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +427,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 4940206569139989750}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -764,7 +769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8964498331147942150, guid: af9e9c290586ab24fa5e57a099624c2f, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af9e9c290586ab24fa5e57a099624c2f, type: 3}
