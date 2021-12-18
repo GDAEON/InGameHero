@@ -11,8 +11,8 @@ public class EnemyController : MonoBehaviour
     public Material material;
     [Header("Fight settings")]
     [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private List<Transform> attackPoint;
-    public float attackRange;
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private float attackRange;
     void Start()
     {
         _healthbar = GetComponentInChildren<Healthbar>();
@@ -26,27 +26,28 @@ public class EnemyController : MonoBehaviour
             GetComponent<Collider>().enabled = false;
             _animator.SetTrigger("Death");
             _isDead = true;
-            Destroy(gameObject, 5);
+            StartCoroutine(nameof(DeathTimer));
         }
     }
 
     public void Attack(int damage)
     {
-        foreach (var point in attackPoint)
+        var hitPlayer = Physics.OverlapSphere(attackPoint.position, attackRange, playerLayer);
+        foreach (var player in hitPlayer)
         {
-            var hitPlayer = Physics.OverlapSphere(point.position, attackRange, playerLayer);
-            foreach (var player in hitPlayer)
-            {
-                player.GetComponentInChildren<PlayerBar>().SendMessage("TakeDamage", damage);
-            }
+            Debug.Log("Attack invoke, player name = " + player.name);
+            player.GetComponentInChildren<PlayerBar>().SendMessage("TakeDamage", damage);
         }
     }
-
+    
+    IEnumerator DeathTimer()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
+    }
+    
     private void OnDrawGizmosSelected()
     {
-        foreach (var point in attackPoint)
-        {
-            Gizmos.DrawWireSphere(point.position, attackRange);
-        }
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }
