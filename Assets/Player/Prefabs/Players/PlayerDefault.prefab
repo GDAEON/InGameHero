@@ -54,6 +54,7 @@ MonoBehaviour:
   cameraSensitivity: 15
   gravity: 9.81
   jumpPower: 5
+  damage: 10
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -61,6 +62,10 @@ MonoBehaviour:
   attackRange: 0.84
   healthBar: {fileID: 7740996277459198551}
   staminaBar: {fileID: 7740996276174474806}
+  bodiesPrefabs:
+  - {fileID: 3450505715536293556}
+  - {fileID: 3601774064674406794, guid: 0c349c87aa56dc343a25ca8060141a25, type: 3}
+  - {fileID: 2737291726160541592, guid: 21daa848ca731d84db9812a36f2e0ca6, type: 3}
 --- !u!114 &3450505715536293559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +155,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: be7834c2-c3d1-4912-821e-e55aaec507ae
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3450505715536293515}
+        m_TargetAssemblyTypeName: Player.Scripts.Controller, Assembly-CSharp
+        m_MethodName: OnAgony
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 97cc4a5a-5672-4390-9062-aa864b9d229b
+    m_ActionName: Player/Transmit[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -237,7 +258,7 @@ Camera:
   field of view: 65
   orthographic: 0
   orthographic size: 5
-  m_Depth: -2
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 247
@@ -575,15 +596,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7740996277505272220}
-  m_LocalRotation: {x: -0, y: -0.057194736, z: -0, w: 0.9983631}
-  m_LocalPosition: {x: 0, y: -0.00000011920929, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2039585313670316412}
   m_Father: {fileID: 3450505715905730898}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: -6.558, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &7740996277505272217
 Camera:
   m_ObjectHideFlags: 0
@@ -593,7 +614,7 @@ Camera:
   m_GameObject: {fileID: 7740996277505272220}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 4
+  m_ClearFlags: 3
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -612,7 +633,7 @@ Camera:
   field of view: 65
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 256

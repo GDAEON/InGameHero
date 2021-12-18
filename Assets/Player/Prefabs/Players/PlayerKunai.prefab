@@ -295,7 +295,7 @@ Camera:
   field of view: 65
   orthographic: 0
   orthographic size: 5
-  m_Depth: -2
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 247
@@ -432,6 +432,7 @@ MonoBehaviour:
   cameraSensitivity: 15
   gravity: 9.81
   jumpPower: 5
+  damage: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -439,6 +440,10 @@ MonoBehaviour:
   attackRange: 0.84
   healthBar: {fileID: 8463162957102009705}
   staminaBar: {fileID: 8463162958252122376}
+  bodiesPrefabs:
+  - {fileID: 3450505715536293556, guid: 538c7920d89519346a1b895cc8710320, type: 3}
+  - {fileID: 3601774064674406794}
+  - {fileID: 2737291726160541592, guid: 21daa848ca731d84db9812a36f2e0ca6, type: 3}
 --- !u!114 &3601774064674406793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,6 +533,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: be7834c2-c3d1-4912-821e-e55aaec507ae
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3601774064674406837}
+        m_TargetAssemblyTypeName: Player.Scripts.Controller, Assembly-CSharp
+        m_MethodName: OnAgony
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 97cc4a5a-5672-4390-9062-aa864b9d229b
+    m_ActionName: Player/Transmit[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -631,7 +652,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8463162957458458277}
   - component: {fileID: 8463162957458458279}
-  - component: {fileID: 8463162957458458276}
   m_Layer: 3
   m_Name: ArmCamera
   m_TagString: Untagged
@@ -646,15 +666,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8463162957458458274}
-  m_LocalRotation: {x: -0, y: -0.057194736, z: -0, w: 0.9983631}
-  m_LocalPosition: {x: 0, y: -0.00000011920929, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8627769923649516803}
   m_Father: {fileID: 3601774064300521068}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: -6.558, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &8463162957458458279
 Camera:
   m_ObjectHideFlags: 0
@@ -664,7 +684,7 @@ Camera:
   m_GameObject: {fileID: 8463162957458458274}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 4
+  m_ClearFlags: 3
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -683,7 +703,7 @@ Camera:
   field of view: 65
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 256
@@ -698,14 +718,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &8463162957458458276
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8463162957458458274}
-  m_Enabled: 1
 --- !u!1001 &3601774064504128929
 PrefabInstance:
   m_ObjectHideFlags: 0

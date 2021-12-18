@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Fire
+  - DefaultEnemy
+  - KunaiEnemy
+  - TankEnemy
   layers:
   - Default
   - TransparentFX
@@ -14,7 +17,7 @@ TagManager:
   - UI
   - Enemy
   - PostProccesing
-  - Arms
+  - Foreground
   - 
   - 
   - 

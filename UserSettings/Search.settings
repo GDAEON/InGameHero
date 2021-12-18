@@ -10,9 +10,9 @@ scopes = {
 	"last_search.7C5D90A9" = "graph"
 	"OpenInspectorPreview.7C5D90A9" = "0"
 	"currentGroup.7C5D90A9" = "menu"
-	"last_search.785D90A9" = "scriptable"
+	"last_search.785D90A9" = "Input"
 	"OpenInspectorPreview.785D90A9" = "0"
-	"currentGroup.785D90A9" = "all"
+	"currentGroup.785D90A9" = "menu"
 }
 providers = {
 	adb = {
@@ -62,6 +62,7 @@ providers = {
 	}
 }
 recentSearches = [
+	"I"
 ]
 searchItemFavorites = [
 ]
