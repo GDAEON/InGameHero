@@ -1,32 +1,33 @@
 using System;
+using System.Collections;
 using Enemies.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.Serialization;
 
 namespace Player.Scripts
 {
     public class Controller : MonoBehaviour
     {
-        [Header("Player settings")]
-        [SerializeField] private float moveSpeed;
+        [Header("Player settings")] [SerializeField]
+        private float moveSpeed;
+
         [SerializeField] private float cameraSensitivity;
-        [SerializeField]private float gravity = 9.81f;
-        [SerializeField]private float jumpPower;
-        
-        [Header("Fight settings")]
-        [SerializeField] private float damage;
+        [SerializeField] private float gravity = 9.81f;
+        [SerializeField] private float jumpPower;
+
+        [Header("Fight settings")] [SerializeField]
+        private float damage;
+
         [SerializeField] private LayerMask enemyLayer;
         [SerializeField] private Transform attackPoint;
         [SerializeField] private float attackRange;
         [SerializeField] private PlayerBar healthBar;
         [SerializeField] private PlayerBar staminaBar;
 
-        [Header("Bodies")]
-        [SerializeField] private GameObject[] bodiesPrefabs;
-        
-        
+        [Header("Bodies")] [SerializeField] private GameObject[] bodiesPrefabs;
+
+
         private CharacterController _controller;
         private Camera _camera;
         private bool _mCharging;
@@ -37,7 +38,7 @@ namespace Player.Scripts
         private static readonly int Agony = Animator.StringToHash("Agony");
 
         public void OnMove(InputAction.CallbackContext context)
-        { 
+        {
             _mMove = context.ReadValue<Vector2>();
         }
 
@@ -71,7 +72,7 @@ namespace Player.Scripts
 
         private void Start()
         {
-            _camera = Camera.main;
+            _camera = GetComponentInChildren<Camera>();
             _controller = GetComponent<CharacterController>();
 
             // Lock cursor
@@ -87,27 +88,26 @@ namespace Player.Scripts
             {
                 Move(_mMove);
             }
-            
+
             ApplyGravity();
         }
 
         private void ApplyGravity()
         {
-            
-            if(Math.Abs(_velocity.y - jumpPower) > 0.01f && _controller.isGrounded) 
+            if (Math.Abs(_velocity.y - jumpPower) > 0.01f && _controller.isGrounded)
             {
                 _velocity = Vector3.zero;
                 return;
             }
-            
+
             var move = Quaternion.Euler(0, _camera.transform.eulerAngles.y, 0) *
                        new Vector3(_mMove.x, 0, _mMove.y);
-            
+
             _velocity.x = move.x * moveSpeed;
             _velocity.z = move.z * moveSpeed;
 
             _velocity.y -= gravity * Time.deltaTime;
-            _controller.Move(_velocity * Time.deltaTime);    
+            _controller.Move(_velocity * Time.deltaTime);
         }
 
         private void Move(Vector2 direction)
@@ -115,10 +115,10 @@ namespace Player.Scripts
             if (direction.sqrMagnitude < 0.01)
                 return;
             var scaledMoveSpeed = moveSpeed * Time.deltaTime;
-            
+
             var move = Quaternion.Euler(0, _camera.transform.eulerAngles.y, 0) *
                        new Vector3(direction.x, 0, direction.y);
-            
+
             _controller.Move(move * (scaledMoveSpeed * Time.deltaTime));
         }
 
@@ -155,35 +155,35 @@ namespace Player.Scripts
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
             foreach (var enemy in hitEnemies)
             {
-                print(enemy.tag);
                 if (enemy.CompareTag("DefaultEnemy"))
                 {
-                    print("О этот дефолтный");
                     animator.SetTrigger(Agony);
-                    SpawnBody(0, enemy.transform);  
-                    Destroy(gameObject, 2);
+                    StartCoroutine(SpawnBody(0, enemy.gameObject));
                 }
-                else if(enemy.CompareTag("KunaiEnemy"))
+                else if (enemy.CompareTag("KunaiEnemy"))
                 {
-                    print("О этот с кунаями");
                     animator.SetTrigger(Agony);
-                    SpawnBody(1, enemy.transform); 
-                    Destroy(gameObject, 2);
+                    StartCoroutine(SpawnBody(1, enemy.gameObject));
                 }
                 else if (enemy.CompareTag("TankEnemy"))
                 {
-                    print("О этот танк");
                     animator.SetTrigger(Agony);
-                    SpawnBody(2, enemy.transform);
-                    Destroy(gameObject, 2);
+                    StartCoroutine(SpawnBody(2, enemy.gameObject));
                 }
             }
         }
 
-        private void SpawnBody(int body, Transform enemy)
+        private IEnumerator SpawnBody(int body, GameObject enemy)
         {
+            yield return new WaitForSeconds(1f);
             var enemyTransform = enemy.transform;
-            Instantiate(bodiesPrefabs[body], enemyTransform.position, enemyTransform.rotation);
+            var enemyPosition = enemyTransform.position;
+            Instantiate(bodiesPrefabs[body], new Vector3(enemyPosition.x, enemyPosition.y + 1, enemyPosition.z),
+                enemyTransform.rotation);
+            Destroy(gameObject);
+
+            // TODO add death
+            Destroy(enemy);
         }
 
         private void OnDrawGizmosSelected()

@@ -204,9 +204,10 @@ GameObject:
   - component: {fileID: 445501664065287801}
   - component: {fileID: 1753956911}
   - component: {fileID: 1753956914}
+  - component: {fileID: 916767018}
   m_Layer: 6
   m_Name: Default
-  m_TagString: Untagged
+  m_TagString: DefaultEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -284,6 +285,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 50
+--- !u!136 &916767018
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788082342254297921}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.0329576
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.00562, z: 0}
 --- !u!1 &1286735123440995987
 GameObject:
   m_ObjectHideFlags: 0

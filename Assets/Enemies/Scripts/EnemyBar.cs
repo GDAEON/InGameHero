@@ -8,15 +8,12 @@ namespace Enemies.Scripts
     public class EnemyBar : Healthbar
     {
         private Camera _camera;
-        
-        private void Awake()
-        {
-            _camera = Camera.main;
-        }
 
         private void FixedUpdate()
         {
-            transform.LookAt(_camera.transform, Vector3.down);
+            _camera = Camera.main;
+            if(_camera)
+                transform.LookAt(_camera.transform, Vector3.down);
         }
     }
 }
