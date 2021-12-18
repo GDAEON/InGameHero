@@ -5,15 +5,15 @@ using UnityEngine;
 public class StartCoolDown : StateMachineBehaviour
 {
     public string skillName;
+    private CoolDown _coolDown;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("on state vizvan");
         animator.SetBool(skillName, false);
-        Debug.Log(animator.GetBool(skillName) + "bool jump attack");
+        _coolDown = animator.GetComponent<CoolDown>();
+        _coolDown.coolDown = true;
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

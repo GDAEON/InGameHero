@@ -441,6 +441,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4940206569139989748, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5156639391495084975, guid: 1bc3d6ec2a4c96343a437cf73da608ec, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -464,7 +468,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 788082342254297921, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
   m_PrefabInstance: {fileID: 445501663441304585}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &967323067
+--- !u!114 &967323080
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -476,22 +480,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e62056a857a464b94d94f7efa291ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillName: JumpAttack
-  coolDownTime: 7
---- !u!136 &967323072
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  skillName: SpinAttack
+  coolDownTime: 3
+  coolDown: 0
+--- !u!4 &1117437684 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5654718034698064954, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
+  m_PrefabInstance: {fileID: 445501663441304585}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967323061}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.2676828
-  m_Height: 2.0740666
-  m_Direction: 1
-  m_Center: {x: 0.008935213, y: 1.0016677, z: 0}
 --- !u!1001 &445501663441304585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -499,17 +495,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1753956911, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
-      propertyPath: m_Speed
+    - target: {fileID: 967323067, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
+      propertyPath: coolDownTime
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1753956911, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1753956914, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 118224001635129851, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
       propertyPath: m_RootOrder
@@ -555,49 +543,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 445501664065287801, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 445501664065287801, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 777a6dcf75fbeb547b1d84e889885518, type: 2}
-    - target: {fileID: 445501664065287801, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
-      propertyPath: m_UpdateMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 445501664065287801, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
-      propertyPath: m_CullingMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 445501664065287801, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 606587566144526112, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 606587566144526112, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 606587566144526112, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 606587566144526112, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 788082342254297921, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
       propertyPath: m_Name
       value: Default
       objectReference: {fileID: 0}
-    - target: {fileID: 788082342254297921, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 7343694447896412323, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
+      propertyPath: attackPoint
+      value: 
+      objectReference: {fileID: 1117437684}
+    - target: {fileID: 7343694447896412323, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
+      propertyPath: attackRange
+      value: 0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 7343694447896412323, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
+      propertyPath: playerLayer.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8415147945366294846, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
       propertyPath: m_AnchorMax.x
@@ -607,8 +567,7 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1753956914, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
 --- !u!1001 &5945088891737226287
 PrefabInstance:

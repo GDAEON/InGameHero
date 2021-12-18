@@ -145,6 +145,7 @@ namespace Player.Scripts
             foreach (var enemy in hitEnemies)
             {
                 enemy.GetComponentInChildren<EnemyBar>().SendMessage("TakeDamage", damage);
+                enemy.GetComponent<Animator>().SetTrigger("Hit");
             }
         }
 
