@@ -8,6 +8,7 @@ TagManager:
   - DefaultEnemy
   - KunaiEnemy
   - TankEnemy
+  - Kunai
   layers:
   - Default
   - TransparentFX
