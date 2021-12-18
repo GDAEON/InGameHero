@@ -11,8 +11,8 @@ public class EnemyController : MonoBehaviour
     public Material material;
     [Header("Fight settings")]
     [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private Transform attackPoint;
-    [SerializeField] private float attackRange;
+    [SerializeField] private List<Transform> attackPoint;
+    public float attackRange;
     void Start()
     {
         _healthbar = GetComponentInChildren<Healthbar>();
@@ -32,11 +32,14 @@ public class EnemyController : MonoBehaviour
 
     public void Attack(int damage)
     {
-        var hitPlayer = Physics.OverlapSphere(attackPoint.position, attackRange, playerLayer);
-        foreach (var player in hitPlayer)
+        foreach (var point in attackPoint)
         {
-            Debug.Log("Attack invoke, player name = " + player.name);
-            player.GetComponentInChildren<PlayerBar>().SendMessage("TakeDamage", damage);
+            var hitPlayer = Physics.OverlapSphere(point.position, attackRange, playerLayer);
+            foreach (var player in hitPlayer)
+            {
+                Debug.Log("Attack invoke, player name = " + player.name);
+                player.GetComponentInChildren<PlayerBar>().SendMessage("TakeDamage", damage);
+            }
         }
     }
     
@@ -48,6 +51,9 @@ public class EnemyController : MonoBehaviour
     
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        foreach (var point in attackPoint)
+        {
+            Gizmos.DrawWireSphere(point.position, attackRange);
+        }
     }
 }
