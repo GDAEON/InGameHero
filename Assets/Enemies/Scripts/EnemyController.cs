@@ -26,7 +26,7 @@ public class EnemyController : MonoBehaviour
             GetComponent<Collider>().enabled = false;
             _animator.SetTrigger("Death");
             _isDead = true;
-            StartCoroutine(nameof(DeathTimer));
+            Destroy(gameObject, 5);
         }
     }
 
@@ -37,18 +37,11 @@ public class EnemyController : MonoBehaviour
             var hitPlayer = Physics.OverlapSphere(point.position, attackRange, playerLayer);
             foreach (var player in hitPlayer)
             {
-                Debug.Log("Attack invoke, player name = " + player.name);
                 player.GetComponentInChildren<PlayerBar>().SendMessage("TakeDamage", damage);
             }
         }
     }
-    
-    IEnumerator DeathTimer()
-    {
-        yield return new WaitForSeconds(5f);
-        Destroy(gameObject);
-    }
-    
+
     private void OnDrawGizmosSelected()
     {
         foreach (var point in attackPoint)
