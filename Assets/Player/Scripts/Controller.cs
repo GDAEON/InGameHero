@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Enemies.Scripts;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
@@ -83,6 +84,11 @@ namespace Player.Scripts
             Cursor.visible = false;
         }
 
+        private void Start()
+        {
+            StartCoroutine(ReduceTime());
+        }
+
         public void Update()
         {
             Look(_mLook);
@@ -92,24 +98,17 @@ namespace Player.Scripts
             }
 
             ApplyGravity();
-
-            ReduceTime();
         }
 
-        private void ReduceTime()
+        private IEnumerator ReduceTime()
         {
-            var seconds = timeToChangeBody;
-            switch (int.Parse(timer.text))
+            while (timeToChangeBody > 0)
             {
-                case > 0:
-                    seconds -= (int)Time.time % 60;
-                    timer.text = seconds.ToString();
-                    break;
-                case 0:
-                    healthBar.health = 0;
-                    healthBar.UpdateHealth();
-                    break;
+                yield return new WaitForSeconds(1);
+                timeToChangeBody -= 1;
+                timer.text = timeToChangeBody.ToString();
             }
+            healthBar.SetHealth(0);
         }
 
         private void ApplyGravity()
