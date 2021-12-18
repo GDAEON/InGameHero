@@ -6,8 +6,9 @@ public class CoolDown : MonoBehaviour
 {
     public string skillName;
     public float coolDownTime;
-    private bool _coolDown;
     private Animator _animator;
+    [HideInInspector]
+    public bool coolDown;
 
     void Start()
     {
@@ -16,15 +17,14 @@ public class CoolDown : MonoBehaviour
     
     void Update()
     {
-        _coolDown = !_animator.GetBool(skillName);
-        if (_coolDown)
+        if (coolDown)
             StartCoroutine(nameof(TimerTake));
     }
     
     private IEnumerator TimerTake()
     {
+        coolDown = false;
         yield return new WaitForSeconds(coolDownTime);
-        _coolDown = false;
         _animator.SetBool(skillName, true);
     }
 }

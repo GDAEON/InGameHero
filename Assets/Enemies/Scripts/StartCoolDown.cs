@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomToJump : StateMachineBehaviour
+public class StartCoolDown : StateMachineBehaviour
 {
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
-    
+    public string skillName;
+    private CoolDown _coolDown;
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        animator.SetBool(skillName, false);
+        _coolDown = animator.GetComponent<CoolDown>();
+        _coolDown.coolDown = true;
+    }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       animator.SetInteger("Chance", Random.Range(0, 10));
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
