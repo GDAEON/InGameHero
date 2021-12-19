@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using Enemies.Scripts;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
@@ -179,7 +178,7 @@ namespace Player.Scripts
             // ReSharper disable once Unity.PreferNonAllocApi
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
             var enemy = hitEnemies[0];
-            if (enemy.GetComponentsInChildren<EnemyBar>()[1].health <= 30)
+            if (enemy.GetComponentsInChildren<EnemyBar>()[1].health <= 30 || enemy.GetComponentsInChildren<EnemyBar>()[0].health <= 30)
             {
                 if (enemy.CompareTag("DefaultEnemy"))
                 {
@@ -199,6 +198,7 @@ namespace Player.Scripts
             }
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator SpawnBody(int body, GameObject enemy)
         {
             yield return new WaitForSeconds(1f);
@@ -209,23 +209,28 @@ namespace Player.Scripts
 
             var playerTransform = transform;
             var playerPosition = playerTransform.position;
+
+            GameObject newEnemy;
             
             if (gameObject.name.Contains("Default"))
             {
-                Instantiate(enemyPrefabs[0], playerPosition, playerTransform.rotation);    
+                newEnemy = Instantiate(enemyPrefabs[0], playerPosition, playerTransform.rotation);    
             }
             else if(gameObject.name.Contains("Kunai"))
             {
-                Instantiate(enemyPrefabs[1], playerPosition, playerTransform.rotation);
+                newEnemy = Instantiate(enemyPrefabs[1], playerPosition, playerTransform.rotation);
             }
-            else if(gameObject.name.Contains("Tank"))
+            else 
             {
-                Instantiate(enemyPrefabs[1], playerPosition, playerTransform.rotation);
+                newEnemy = Instantiate(enemyPrefabs[2], playerPosition, playerTransform.rotation);
             }
             
             var currentHealth = GetComponentInChildren<PlayerBar>().health;
-            //oldEnemy.GetComponentInChildren<EnemyBar>().SendMessage("SetHealth", currentHealth);
             
+            yield return new WaitForEndOfFrame();
+            
+            newEnemy.GetComponentInChildren<EnemyBar>().SetHealth(currentHealth);
+
             Destroy(enemy);
             Destroy(gameObject);
         }

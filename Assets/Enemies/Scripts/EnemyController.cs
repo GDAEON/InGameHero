@@ -33,9 +33,9 @@ namespace Enemies.Scripts
                 _isDead = true;
                 Destroy(gameObject, 5);
             }
-
+            var health = GetComponentsInChildren<EnemyBar>()[0];
             var stamina = GetComponentsInChildren<EnemyBar>()[1];
-            lastHitIndicator.SetActive(stamina.health <= 30);
+            lastHitIndicator.SetActive(stamina.health <= 30 || health.health <= 30);
         }
 
         public void Attack(int damage)
