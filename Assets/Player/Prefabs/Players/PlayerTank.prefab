@@ -158,7 +158,6 @@ GameObject:
   - component: {fileID: 2737291724811459604}
   - component: {fileID: 2737291724811459601}
   - component: {fileID: 2737291724811459606}
-  - component: {fileID: 2737291724811459607}
   m_Layer: 3
   m_Name: Body
   m_TagString: Untagged
@@ -231,20 +230,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2737291724811459607
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2737291724811459605}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2737291724954633300
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,6 +273,7 @@ GameObject:
   - component: {fileID: 2737291726160541607}
   - component: {fileID: 2737291726160541595}
   - component: {fileID: 7022224391811387884}
+  - component: {fileID: 925859767768939917}
   m_Layer: 3
   m_Name: PlayerTank
   m_TagString: Player
@@ -471,6 +457,20 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &925859767768939917
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2737291726160541592}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7022224391790817456
 GameObject:
