@@ -85493,3 +85493,10 @@ AnimationClip:
     floatParameter: 0
     intParameter: 40
     messageOptions: 0
+  - time: 1.3333334
+    functionName: PlayAudio
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: c4f3972c1e2dcd644b171515f201cad5, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

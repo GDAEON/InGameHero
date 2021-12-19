@@ -352,7 +352,10 @@ MonoBehaviour:
   attackRange: 0.84
   healthBar: {fileID: 1990478744}
   staminaBar: {fileID: 976726009}
-  bodiesPrefabs: []
+  timer: {fileID: 0}
+  timeToChangeBody: 0
+  playerPrefabs: []
+  enemyPrefabs: []
 --- !u!114 &4940206568337115000
 MonoBehaviour:
   m_ObjectHideFlags: 0
