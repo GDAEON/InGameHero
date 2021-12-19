@@ -188,7 +188,7 @@ namespace Player.Scripts
         private IEnumerator HandleAttackAnimation()
         {
             var random = new Random();
-            _animator.SetInteger(AttackTrigger, random.Next(0, 2));
+            _animator.SetInteger(AttackTrigger, random.Next(0, 3));
             yield return new WaitForEndOfFrame();
             _animator.SetInteger(AttackTrigger, -1);
         }
