@@ -21,22 +21,29 @@ namespace Enemies.Scripts
         }
     
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        { 
-            _distance = Vector3.Distance(animator.transform.position, _playerTransform.position);
-            if (_distance < avoidRange)
+        {
+            if (_playerTransform)
             {
-                _agent.destination = animator.transform.position - _playerTransform.position;
+                _distance = Vector3.Distance(animator.transform.position, _playerTransform.position);
+                if (_distance < avoidRange)
+                {
+                    _agent.destination = animator.transform.position - _playerTransform.position;
+                }
+                else
+                {
+                    _agent.destination = _playerTransform.position;
+                    if (_distance <= _attackRange)
+                    {
+                        animator.SetBool(Attack, true);
+                    }
+                }
+                animator.SetFloat(Speed, _agent.velocity.magnitude);
+                animator.SetFloat(RangeToPlayer, _distance);
             }
             else
             {
-                _agent.destination = _playerTransform.position;
-                if (_distance <= _attackRange)
-                {
-                    animator.SetBool(Attack, true);
-                }
+                _playerTransform = GameObject.FindWithTag("Player").transform;
             }
-            animator.SetFloat(Speed, _agent.velocity.magnitude);
-            animator.SetFloat(RangeToPlayer, _distance);
         }
     
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
