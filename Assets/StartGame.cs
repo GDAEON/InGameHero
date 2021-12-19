@@ -9,6 +9,6 @@ public class StartGame : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
-            SceneManager.LoadScene("1LVL");
+            SceneManager.LoadScene("LVL1");
     }
 }
