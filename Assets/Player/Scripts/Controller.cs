@@ -28,8 +28,7 @@ namespace Player.Scripts
         [SerializeField] private TextMeshProUGUI timer;
         [SerializeField] private int timeToChangeBody;
 
-        [Header("Bodies")] 
-        [SerializeField] private GameObject[] bodiesPrefabs;
+        [Header("Bodies")] [SerializeField] private GameObject[] bodiesPrefabs;
 
         private CharacterController _controller;
         private Camera _camera;
@@ -39,6 +38,7 @@ namespace Player.Scripts
         private Vector2 _mMove;
         private Vector3 _velocity = Vector3.zero;
         private static readonly int Agony = Animator.StringToHash("Agony");
+        private static readonly int Hit = Animator.StringToHash("Hit");
 
         public void OnMove(InputAction.CallbackContext context)
         {
@@ -107,6 +107,7 @@ namespace Player.Scripts
                 timeToChangeBody -= 1;
                 timer.text = timeToChangeBody.ToString();
             }
+
             healthBar.SetHealth(0);
         }
 
@@ -163,7 +164,7 @@ namespace Player.Scripts
             foreach (var enemy in hitEnemies)
             {
                 enemy.GetComponentInChildren<EnemyBar>().SendMessage("TakeDamage", damage);
-                enemy.GetComponent<Animator>().SetTrigger("Hit");
+                enemy.GetComponent<Animator>().SetTrigger(Hit);
             }
         }
 
@@ -172,23 +173,21 @@ namespace Player.Scripts
             var animator = GetComponentInChildren<PostProcessVolume>().gameObject.GetComponent<Animator>();
             // ReSharper disable once Unity.PreferNonAllocApi
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
-            foreach (var enemy in hitEnemies)
+            var enemy = hitEnemies[0];
+            if (enemy.CompareTag("DefaultEnemy"))
             {
-                if (enemy.CompareTag("DefaultEnemy"))
-                {
-                    animator.SetTrigger(Agony);
-                    StartCoroutine(SpawnBody(0, enemy.gameObject));
-                }
-                else if (enemy.CompareTag("KunaiEnemy"))
-                {
-                    animator.SetTrigger(Agony);
-                    StartCoroutine(SpawnBody(1, enemy.gameObject));
-                }
-                else if (enemy.CompareTag("TankEnemy"))
-                {
-                    animator.SetTrigger(Agony);
-                    StartCoroutine(SpawnBody(2, enemy.gameObject));
-                }
+                animator.SetTrigger(Agony);
+                StartCoroutine(SpawnBody(0, enemy.gameObject));
+            }
+            else if (enemy.CompareTag("KunaiEnemy"))
+            {
+                animator.SetTrigger(Agony);
+                StartCoroutine(SpawnBody(1, enemy.gameObject));
+            }
+            else if (enemy.CompareTag("TankEnemy"))
+            {
+                animator.SetTrigger(Agony);
+                StartCoroutine(SpawnBody(2, enemy.gameObject));
             }
         }
 

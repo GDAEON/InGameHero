@@ -1,30 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CoolDown : MonoBehaviour
+namespace Enemies.Scripts
 {
-    public string skillName;
-    public float coolDownTime;
-    private Animator _animator;
-    [HideInInspector]
-    public bool coolDown;
+    public class CoolDown : MonoBehaviour
+    {
+        public string skillName;
+        public float coolDownTime;
+        private Animator _animator;
+        [HideInInspector]
+        public bool coolDown;
 
-    void Start()
-    {
-        _animator = GetComponent<Animator>();
-    }
+        private void Start()
+        {
+            _animator = GetComponent<Animator>();
+        }
+
+        private void Update()
+        {
+            if (coolDown)
+                StartCoroutine(nameof(TimerTake));
+        }
     
-    void Update()
-    {
-        if (coolDown)
-            StartCoroutine(nameof(TimerTake));
-    }
-    
-    private IEnumerator TimerTake()
-    {
-        coolDown = false;
-        yield return new WaitForSeconds(coolDownTime);
-        _animator.SetBool(skillName, true);
+        private IEnumerator TimerTake()
+        {
+            coolDown = false;
+            yield return new WaitForSeconds(coolDownTime);
+            _animator.SetBool(skillName, true);
+        }
     }
 }
