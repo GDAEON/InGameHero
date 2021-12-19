@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Enemies.Scripts;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
@@ -24,9 +25,11 @@ namespace Player.Scripts
         [SerializeField] private float attackRange;
         [SerializeField] private PlayerBar healthBar;
         [SerializeField] private PlayerBar staminaBar;
+        [SerializeField] private TextMeshProUGUI timer;
+        [SerializeField] private int timeToChangeBody;
 
-        [Header("Bodies")] [SerializeField] private GameObject[] bodiesPrefabs;
-
+        [Header("Bodies")] 
+        [SerializeField] private GameObject[] bodiesPrefabs;
 
         private CharacterController _controller;
         private Camera _camera;
@@ -70,7 +73,7 @@ namespace Player.Scripts
                 Transmit();
         }
 
-        private void Start()
+        private void Awake()
         {
             _camera = GetComponentInChildren<Camera>();
             _controller = GetComponent<CharacterController>();
@@ -80,6 +83,10 @@ namespace Player.Scripts
             Cursor.visible = false;
         }
 
+        private void Start()
+        {
+            StartCoroutine(ReduceTime());
+        }
 
         public void Update()
         {
@@ -90,6 +97,17 @@ namespace Player.Scripts
             }
 
             ApplyGravity();
+        }
+
+        private IEnumerator ReduceTime()
+        {
+            while (timeToChangeBody > 0)
+            {
+                yield return new WaitForSeconds(1);
+                timeToChangeBody -= 1;
+                timer.text = timeToChangeBody.ToString();
+            }
+            healthBar.SetHealth(0);
         }
 
         private void ApplyGravity()
