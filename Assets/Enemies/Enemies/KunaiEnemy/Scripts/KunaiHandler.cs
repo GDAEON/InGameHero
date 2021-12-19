@@ -22,8 +22,15 @@ namespace Enemies.Enemies.KunaiEnemy.Scripts
             var newProjectile = Instantiate(projectile, kunai.transform.position, kunai.transform.rotation);
             
             var rb = newProjectile.GetComponent<Rigidbody>();
-            
-            rb.AddRelativeForce(Vector3.forward * 20, ForceMode.Impulse);
+
+            if (gameObject.CompareTag("Player"))
+            {
+                rb.AddForce(transform.forward * 20, ForceMode.Impulse);
+            }
+            else
+            {
+                rb.AddRelativeForce(Vector3.forward * 20, ForceMode.Impulse);
+            }
         }
     }
 }
