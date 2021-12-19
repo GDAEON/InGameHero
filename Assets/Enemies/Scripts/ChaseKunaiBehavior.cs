@@ -8,7 +8,7 @@ namespace Enemies.Scripts
         private Transform _playerTransform;
         private NavMeshAgent _agent;
         private float _distance;
-        private float _attackRange;
+        public float attackRange;
         public float avoidRange;
         private static readonly int Attack = Animator.StringToHash("Attack");
         private static readonly int Speed = Animator.StringToHash("Speed");
@@ -32,7 +32,7 @@ namespace Enemies.Scripts
                 else
                 {
                     _agent.destination = _playerTransform.position;
-                    if (_distance <= _attackRange)
+                    if (_distance <= attackRange)
                     {
                         animator.SetBool(Attack, true);
                     }
