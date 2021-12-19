@@ -22,6 +22,7 @@ namespace Player.Scripts
         private float damage;
 
         [SerializeField] private LayerMask enemyLayer;
+        [SerializeField] private LayerMask bossLayer;
         [SerializeField] private Transform attackPoint;
         [SerializeField] private float attackRange;
         [SerializeField] private PlayerBar healthBar;
@@ -182,6 +183,14 @@ namespace Player.Scripts
                 enemy.GetComponentsInChildren<EnemyBar>()[0].SendMessage("TakeDamage", damage);
                 enemy.GetComponentsInChildren<EnemyBar>()[1].SendMessage("TakeDamage", damage * 3);
                 enemy.GetComponent<Animator>().SetTrigger(Hit);
+            }
+            
+            hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, bossLayer);
+            
+
+            foreach (var enemy in hitEnemies)
+            {
+                //TODO final game
             }
         }
 
