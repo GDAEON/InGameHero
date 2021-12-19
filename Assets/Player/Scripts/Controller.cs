@@ -11,6 +11,7 @@ namespace Player.Scripts
 {
     public class Controller : MonoBehaviour
     {
+        public DeathScript deathScript;
         [Header("Player settings")] [SerializeField]
         private float moveSpeed;
 
@@ -100,6 +101,9 @@ namespace Player.Scripts
 
         public void Update()
         {
+
+            if (healthBar.health <= 0)
+                deathScript.Setup();
             Look(_mLook);
             if (_controller.isGrounded)
             {
