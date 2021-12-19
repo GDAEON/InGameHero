@@ -8,6 +8,9 @@ public class DeathScript : MonoBehaviour
     public void Setup()
     {
         gameObject.SetActive(true);
+        
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     public void RestartButton()
