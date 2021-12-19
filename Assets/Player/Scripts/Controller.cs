@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
+using Random = System.Random;
 
 namespace Player.Scripts
 {
@@ -39,8 +40,11 @@ namespace Player.Scripts
         private Vector2 _mLook;
         private Vector2 _mMove;
         private Vector3 _velocity = Vector3.zero;
+        private Animator _animator;
         private static readonly int Agony = Animator.StringToHash("Agony");
         private static readonly int Hit = Animator.StringToHash("Hit");
+        private static readonly int AttackTrigger = Animator.StringToHash("Attack");
+        private static readonly int JumpTrigger = Animator.StringToHash("Jump");
 
         public void OnMove(InputAction.CallbackContext context)
         {
@@ -77,6 +81,8 @@ namespace Player.Scripts
 
         private void Awake()
         {
+            _animator = GetComponentInChildren<Animator>();
+            
             _camera = GetComponentInChildren<Camera>();
             _controller = GetComponent<CharacterController>();
 
@@ -100,6 +106,7 @@ namespace Player.Scripts
             }
 
             ApplyGravity();
+
         }
 
         private IEnumerator ReduceTime()
@@ -146,6 +153,8 @@ namespace Player.Scripts
 
         private void Jump()
         {
+            _animator.SetTrigger(JumpTrigger);
+            
             _velocity.y = jumpPower;
             staminaBar.TakeDamage(15);
         }
@@ -162,6 +171,10 @@ namespace Player.Scripts
 
         private void Attack()
         {
+            
+            StartCoroutine(HandleAttackAnimation());
+            
+    
             // ReSharper disable once Unity.PreferNonAllocApi
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
             foreach (var enemy in hitEnemies)
@@ -170,6 +183,14 @@ namespace Player.Scripts
                 enemy.GetComponentsInChildren<EnemyBar>()[1].SendMessage("TakeDamage", damage * 3);
                 enemy.GetComponent<Animator>().SetTrigger(Hit);
             }
+        }
+
+        private IEnumerator HandleAttackAnimation()
+        {
+            var random = new Random();
+            _animator.SetInteger(AttackTrigger, random.Next(0, 2));
+            yield return new WaitForEndOfFrame();
+            _animator.SetInteger(AttackTrigger, -1);
         }
 
         private void Transmit()
