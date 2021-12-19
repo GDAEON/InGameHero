@@ -85,6 +85,7 @@ namespace Player.Scripts
 
         private void Start()
         {
+            timeToChangeBody = 20;
             StartCoroutine(ReduceTime());
         }
 
@@ -163,7 +164,8 @@ namespace Player.Scripts
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
             foreach (var enemy in hitEnemies)
             {
-                enemy.GetComponentInChildren<EnemyBar>().SendMessage("TakeDamage", damage);
+                enemy.GetComponentsInChildren<EnemyBar>()[0].SendMessage("TakeDamage", damage);
+                enemy.GetComponentsInChildren<EnemyBar>()[1].SendMessage("TakeDamage", damage * 3);
                 enemy.GetComponent<Animator>().SetTrigger(Hit);
             }
         }
@@ -174,20 +176,23 @@ namespace Player.Scripts
             // ReSharper disable once Unity.PreferNonAllocApi
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
             var enemy = hitEnemies[0];
-            if (enemy.CompareTag("DefaultEnemy"))
+            if (enemy.GetComponentsInChildren<EnemyBar>()[1].health <= 30)
             {
-                animator.SetTrigger(Agony);
-                StartCoroutine(SpawnBody(0, enemy.gameObject));
-            }
-            else if (enemy.CompareTag("KunaiEnemy"))
-            {
-                animator.SetTrigger(Agony);
-                StartCoroutine(SpawnBody(1, enemy.gameObject));
-            }
-            else if (enemy.CompareTag("TankEnemy"))
-            {
-                animator.SetTrigger(Agony);
-                StartCoroutine(SpawnBody(2, enemy.gameObject));
+                if (enemy.CompareTag("DefaultEnemy"))
+                {
+                    animator.SetTrigger(Agony);
+                    StartCoroutine(SpawnBody(0, enemy.gameObject));
+                }
+                else if (enemy.CompareTag("KunaiEnemy"))
+                {
+                    animator.SetTrigger(Agony);
+                    StartCoroutine(SpawnBody(1, enemy.gameObject));
+                }
+                else if (enemy.CompareTag("TankEnemy"))
+                {
+                    animator.SetTrigger(Agony);
+                    StartCoroutine(SpawnBody(2, enemy.gameObject));
+                }
             }
         }
 
