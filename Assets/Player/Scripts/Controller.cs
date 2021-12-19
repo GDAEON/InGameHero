@@ -39,6 +39,7 @@ namespace Player.Scripts
         private Vector2 _mMove;
         private Vector3 _velocity = Vector3.zero;
         private static readonly int Agony = Animator.StringToHash("Agony");
+        private static readonly int Hit = Animator.StringToHash("Hit");
 
         public void OnMove(InputAction.CallbackContext context)
         {
@@ -163,7 +164,7 @@ namespace Player.Scripts
             foreach (var enemy in hitEnemies)
             {
                 enemy.GetComponentInChildren<EnemyBar>().SendMessage("TakeDamage", damage);
-                enemy.GetComponent<Animator>().SetTrigger("Hit");
+                enemy.GetComponent<Animator>().SetTrigger(Hit);
             }
         }
 

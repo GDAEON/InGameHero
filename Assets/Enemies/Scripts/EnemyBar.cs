@@ -1,5 +1,4 @@
-﻿using Player.Scripts;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Enemies.Scripts

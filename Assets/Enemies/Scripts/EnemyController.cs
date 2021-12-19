@@ -1,52 +1,55 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Player.Scripts;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+namespace Enemies.Scripts
 {
-    private bool _isDead;
-    private Healthbar _healthbar;
-    private Animator _animator;
-    public Material material;
-    [Header("Fight settings")]
-    [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private List<Transform> attackPoint;
-    public float attackRange;
-    void Start()
+    public class EnemyController : MonoBehaviour
     {
-        _healthbar = GetComponentInChildren<Healthbar>();
-        _animator = GetComponent<Animator>();
-    }
-    
-    void Update()
-    {
-        if (_healthbar.health == 0 && !_isDead)
-        {
-            GetComponent<Collider>().enabled = false;
-            _animator.SetTrigger("Death");
-            _isDead = true;
-            Destroy(gameObject, 5);
-        }
-    }
+        private bool _isDead;
+        private Healthbar _healthbar;
+        private Animator _animator;
+        public Material material;
+        [Header("Fight settings")]
+        [SerializeField] private LayerMask playerLayer;
+        [SerializeField] private List<Transform> attackPoint;
+        public float attackRange;
+        private static readonly int Death = Animator.StringToHash("Death");
 
-    public void Attack(int damage)
-    {
-        foreach (var point in attackPoint)
+        private void Start()
         {
-            var hitPlayer = Physics.OverlapSphere(point.position, attackRange, playerLayer);
-            foreach (var player in hitPlayer)
+            _healthbar = GetComponentInChildren<Healthbar>();
+            _animator = GetComponent<Animator>();
+        }
+
+        private void Update()
+        {
+            if (_healthbar.health == 0 && !_isDead)
+            {
+                GetComponent<Collider>().enabled = false;
+                _animator.SetTrigger(Death);
+                _isDead = true;
+                Destroy(gameObject, 5);
+            }
+        }
+
+        public void Attack(int damage)
+        {
+            foreach (var player in attackPoint.Select(point =>
+                // ReSharper disable once Unity.PreferNonAllocApi
+                Physics.OverlapSphere(point.position, attackRange, playerLayer)).SelectMany(hitPlayer => hitPlayer))
             {
                 player.GetComponentInChildren<PlayerBar>().SendMessage("TakeDamage", damage);
             }
         }
-    }
 
-    private void OnDrawGizmosSelected()
-    {
-        foreach (var point in attackPoint)
+        private void OnDrawGizmosSelected()
         {
-            Gizmos.DrawWireSphere(point.position, attackRange);
+            foreach (var point in attackPoint)
+            {
+                Gizmos.DrawWireSphere(point.position, attackRange);
+            }
         }
     }
 }
