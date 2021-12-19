@@ -225,11 +225,11 @@ namespace Player.Scripts
                 newEnemy = Instantiate(enemyPrefabs[2], playerPosition, playerTransform.rotation);
             }
             
-            var currentHealth = GetComponentInChildren<PlayerBar>().health;
+            var tmpHealth = GetComponentInChildren<PlayerBar>().health;
             
             yield return new WaitForEndOfFrame();
             
-            newEnemy.GetComponentInChildren<EnemyBar>().SetHealth(currentHealth);
+            newEnemy.GetComponentInChildren<EnemyBar>().SetHealth(tmpHealth);
 
             Destroy(enemy);
             Destroy(gameObject);
