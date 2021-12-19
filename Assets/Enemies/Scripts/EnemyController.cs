@@ -14,6 +14,7 @@ namespace Enemies.Scripts
         [Header("Fight settings")]
         [SerializeField] private LayerMask playerLayer;
         [SerializeField] private List<Transform> attackPoint;
+        [SerializeField] private GameObject lastHitIndicator;
         public float attackRange;
         private static readonly int Death = Animator.StringToHash("Death");
 
@@ -32,6 +33,9 @@ namespace Enemies.Scripts
                 _isDead = true;
                 Destroy(gameObject, 5);
             }
+            var health = GetComponentsInChildren<EnemyBar>()[0];
+            var stamina = GetComponentsInChildren<EnemyBar>()[1];
+            lastHitIndicator.SetActive(stamina.health <= 30 || health.health <= 30);
         }
 
         public void Attack(int damage)

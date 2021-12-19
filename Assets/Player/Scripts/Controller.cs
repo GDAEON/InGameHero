@@ -28,7 +28,9 @@ namespace Player.Scripts
         [SerializeField] private TextMeshProUGUI timer;
         [SerializeField] private int timeToChangeBody;
 
-        [Header("Bodies")] [SerializeField] private GameObject[] bodiesPrefabs;
+        [Header("Bodies")] 
+        [SerializeField] private GameObject[] playerPrefabs;
+        [SerializeField] private GameObject[] enemyPrefabs;
 
         private CharacterController _controller;
         private Camera _camera;
@@ -85,6 +87,7 @@ namespace Player.Scripts
 
         private void Start()
         {
+            timeToChangeBody = 20;
             StartCoroutine(ReduceTime());
         }
 
@@ -163,7 +166,8 @@ namespace Player.Scripts
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
             foreach (var enemy in hitEnemies)
             {
-                enemy.GetComponentInChildren<EnemyBar>().SendMessage("TakeDamage", damage);
+                enemy.GetComponentsInChildren<EnemyBar>()[0].SendMessage("TakeDamage", damage);
+                enemy.GetComponentsInChildren<EnemyBar>()[1].SendMessage("TakeDamage", damage * 3);
                 enemy.GetComponent<Animator>().SetTrigger(Hit);
             }
         }
@@ -174,34 +178,61 @@ namespace Player.Scripts
             // ReSharper disable once Unity.PreferNonAllocApi
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
             var enemy = hitEnemies[0];
-            if (enemy.CompareTag("DefaultEnemy"))
+            if (enemy.GetComponentsInChildren<EnemyBar>()[1].health <= 30 || enemy.GetComponentsInChildren<EnemyBar>()[0].health <= 30)
             {
-                animator.SetTrigger(Agony);
-                StartCoroutine(SpawnBody(0, enemy.gameObject));
-            }
-            else if (enemy.CompareTag("KunaiEnemy"))
-            {
-                animator.SetTrigger(Agony);
-                StartCoroutine(SpawnBody(1, enemy.gameObject));
-            }
-            else if (enemy.CompareTag("TankEnemy"))
-            {
-                animator.SetTrigger(Agony);
-                StartCoroutine(SpawnBody(2, enemy.gameObject));
+                if (enemy.CompareTag("DefaultEnemy"))
+                {
+                    animator.SetTrigger(Agony);
+                    StartCoroutine(SpawnBody(0, enemy.gameObject));
+                }
+                else if (enemy.CompareTag("KunaiEnemy"))
+                {
+                    animator.SetTrigger(Agony);
+                    StartCoroutine(SpawnBody(1, enemy.gameObject));
+                }
+                else if (enemy.CompareTag("TankEnemy"))
+                {
+                    animator.SetTrigger(Agony);
+                    StartCoroutine(SpawnBody(2, enemy.gameObject));
+                }
             }
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator SpawnBody(int body, GameObject enemy)
         {
             yield return new WaitForSeconds(1f);
             var enemyTransform = enemy.transform;
             var enemyPosition = enemyTransform.position;
-            Instantiate(bodiesPrefabs[body], new Vector3(enemyPosition.x, enemyPosition.y + 1, enemyPosition.z),
+            Instantiate(playerPrefabs[body], new Vector3(enemyPosition.x, enemyPosition.y + 1, enemyPosition.z),
                 enemyTransform.rotation);
-            Destroy(gameObject);
 
-            // TODO add death
+            var playerTransform = transform;
+            var playerPosition = playerTransform.position;
+
+            GameObject newEnemy;
+            
+            if (gameObject.name.Contains("Default"))
+            {
+                newEnemy = Instantiate(enemyPrefabs[0], playerPosition, playerTransform.rotation);    
+            }
+            else if(gameObject.name.Contains("Kunai"))
+            {
+                newEnemy = Instantiate(enemyPrefabs[1], playerPosition, playerTransform.rotation);
+            }
+            else 
+            {
+                newEnemy = Instantiate(enemyPrefabs[2], playerPosition, playerTransform.rotation);
+            }
+            
+            var tmpHealth = GetComponentInChildren<PlayerBar>().health;
+            
+            yield return new WaitForEndOfFrame();
+            
+            newEnemy.GetComponentInChildren<EnemyBar>().SetHealth(tmpHealth);
+
             Destroy(enemy);
+            Destroy(gameObject);
         }
 
         private void OnDrawGizmosSelected()
