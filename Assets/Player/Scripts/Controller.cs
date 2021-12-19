@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Enemies.Scripts;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
@@ -28,7 +29,9 @@ namespace Player.Scripts
         [SerializeField] private TextMeshProUGUI timer;
         [SerializeField] private int timeToChangeBody;
 
-        [Header("Bodies")] [SerializeField] private GameObject[] bodiesPrefabs;
+        [Header("Bodies")] 
+        [SerializeField] private GameObject[] playerPrefabs;
+        [SerializeField] private GameObject[] enemyPrefabs;
 
         private CharacterController _controller;
         private Camera _camera;
@@ -201,12 +204,30 @@ namespace Player.Scripts
             yield return new WaitForSeconds(1f);
             var enemyTransform = enemy.transform;
             var enemyPosition = enemyTransform.position;
-            Instantiate(bodiesPrefabs[body], new Vector3(enemyPosition.x, enemyPosition.y + 1, enemyPosition.z),
+            Instantiate(playerPrefabs[body], new Vector3(enemyPosition.x, enemyPosition.y + 1, enemyPosition.z),
                 enemyTransform.rotation);
-            Destroy(gameObject);
 
-            // TODO add death
+            var playerTransform = transform;
+            var playerPosition = playerTransform.position;
+            
+            if (gameObject.name.Contains("Default"))
+            {
+                Instantiate(enemyPrefabs[0], playerPosition, playerTransform.rotation);    
+            }
+            else if(gameObject.name.Contains("Kunai"))
+            {
+                Instantiate(enemyPrefabs[1], playerPosition, playerTransform.rotation);
+            }
+            else if(gameObject.name.Contains("Tank"))
+            {
+                Instantiate(enemyPrefabs[1], playerPosition, playerTransform.rotation);
+            }
+            
+            var currentHealth = GetComponentInChildren<PlayerBar>().health;
+            //oldEnemy.GetComponentInChildren<EnemyBar>().SendMessage("SetHealth", currentHealth);
+            
             Destroy(enemy);
+            Destroy(gameObject);
         }
 
         private void OnDrawGizmosSelected()

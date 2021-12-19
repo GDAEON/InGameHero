@@ -168,10 +168,14 @@ MonoBehaviour:
   staminaBar: {fileID: 1618432398577201806}
   timer: {fileID: 1330056296580164112}
   timeToChangeBody: 20
-  bodiesPrefabs:
+  playerPrefabs:
   - {fileID: 3450505715536293556}
   - {fileID: 3601774064674406794, guid: 0c349c87aa56dc343a25ca8060141a25, type: 3}
   - {fileID: 2737291726160541592, guid: 21daa848ca731d84db9812a36f2e0ca6, type: 3}
+  enemyPrefabs:
+  - {fileID: 788082342254297921, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
+  - {fileID: 7589555126836003222, guid: d3feb0cf1103bde41a95b8fb8abc0d36, type: 3}
+  - {fileID: 2750010169279668031, guid: 2635fb0e967d4c244ac0c99283335b66, type: 3}
 --- !u!114 &3450505715536293559
 MonoBehaviour:
   m_ObjectHideFlags: 0
