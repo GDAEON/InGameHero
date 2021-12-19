@@ -3,18 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Fire
+  - DefaultEnemy
+  - KunaiEnemy
+  - TankEnemy
+  - Kunai
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - PostProccesing
+  - Foreground
+  - Boss
   - 
   - 
   - 

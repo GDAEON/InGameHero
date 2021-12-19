@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/PreLVL.unity
+    guid: f798a7d6459157d4c98eff821f0781c0
+  - enabled: 1
+    path: Assets/Scenes/LVL1.unity
+    guid: 7f76d525330763342a5081319a1a9bf0
+  - enabled: 1
+    path: Assets/Scenes/LVL2.unity
+    guid: 75be1a33881fea34ba22ce36becd4e54
+  - enabled: 1
+    path: Assets/Scenes/LVL3.unity
+    guid: ab285be927526b648b38279a50ffd8e6
   m_configObjects: {}
