@@ -37,6 +37,7 @@ namespace Player.Scripts
         private CharacterController _controller;
         private Camera _camera;
         private bool _mCharging;
+        private bool _canAttack = true;
         private Vector2 _mRotation;
         private Vector2 _mLook;
         private Vector2 _mMove;
@@ -67,7 +68,7 @@ namespace Player.Scripts
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.phase == InputActionPhase.Started && staminaBar.health >= 25)
+            if (context.phase == InputActionPhase.Started && staminaBar.health >= 25 && _canAttack)
             {
                 Attack();
                 staminaBar.TakeDamage(25);
@@ -191,10 +192,13 @@ namespace Player.Scripts
 
         private IEnumerator HandleAttackAnimation()
         {
+            _canAttack = false;
             var random = new Random();
             _animator.SetInteger(AttackTrigger, random.Next(0, 3));
             yield return new WaitForEndOfFrame();
             _animator.SetInteger(AttackTrigger, -1);
+            yield return new WaitForSeconds(_animator.GetCurrentAnimatorClipInfo(0).Length);
+            _canAttack = true;
         }
 
         private void Transmit()
