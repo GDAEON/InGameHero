@@ -196,8 +196,9 @@ namespace Player.Scripts
             var random = new Random();
             _animator.SetInteger(AttackTrigger, random.Next(0, 3));
             yield return new WaitForEndOfFrame();
+            var animationDuration = _animator.GetNextAnimatorClipInfo(0)[0].clip.length;
             _animator.SetInteger(AttackTrigger, -1);
-            yield return new WaitForSeconds(_animator.GetCurrentAnimatorClipInfo(0).Length);
+            yield return new WaitForSeconds(animationDuration);
             _canAttack = true;
         }
 
