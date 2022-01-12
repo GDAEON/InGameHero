@@ -23,7 +23,6 @@ namespace Player.Scripts
         private float damage;
 
         [SerializeField] private LayerMask enemyLayer;
-        [SerializeField] private LayerMask bossLayer;
         [SerializeField] private Transform attackPoint;
         [SerializeField] private float attackRange;
         [SerializeField] private PlayerBar healthBar;
@@ -38,6 +37,7 @@ namespace Player.Scripts
         private CharacterController _controller;
         private Camera _camera;
         private bool _mCharging;
+        private bool _canAttack = true;
         private Vector2 _mRotation;
         private Vector2 _mLook;
         private Vector2 _mMove;
@@ -68,7 +68,7 @@ namespace Player.Scripts
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.phase == InputActionPhase.Started && staminaBar.health >= 25)
+            if (context.phase == InputActionPhase.Started && staminaBar.health >= 25 && _canAttack)
             {
                 Attack();
                 staminaBar.TakeDamage(25);
@@ -188,22 +188,18 @@ namespace Player.Scripts
                 enemy.GetComponentsInChildren<EnemyBar>()[1].SendMessage("TakeDamage", damage * 3);
                 enemy.GetComponent<Animator>().SetTrigger(Hit);
             }
-            
-            hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, bossLayer);
-            
-
-            foreach (var enemy in hitEnemies)
-            {
-                //TODO final game
-            }
         }
 
         private IEnumerator HandleAttackAnimation()
         {
+            _canAttack = false;
             var random = new Random();
             _animator.SetInteger(AttackTrigger, random.Next(0, 3));
             yield return new WaitForEndOfFrame();
+            var animationDuration = _animator.GetNextAnimatorClipInfo(0)[0].clip.length;
             _animator.SetInteger(AttackTrigger, -1);
+            yield return new WaitForSeconds(animationDuration);
+            _canAttack = true;
         }
 
         private void Transmit()
