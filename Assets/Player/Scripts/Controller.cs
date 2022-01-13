@@ -234,9 +234,9 @@ namespace Player.Scripts
             yield return new WaitForSeconds(1f);
             var enemyTransform = enemy.transform;
             var enemyPosition = enemyTransform.position;
-            Instantiate(playerPrefabs[body], new Vector3(enemyPosition.x, enemyPosition.y + 1, enemyPosition.z),
-                enemyTransform.rotation);
-
+            Instantiate(playerPrefabs[body], new Vector3(enemyPosition.x, enemyPosition.y + 1, enemyPosition.z), enemyTransform.rotation)
+                .GetComponentInChildren<PlayerBar>()
+                .prevHealth = enemy.GetComponentInChildren<EnemyBar>().health;
             var playerTransform = transform;
             var playerPosition = playerTransform.position;
 
@@ -255,7 +255,7 @@ namespace Player.Scripts
                 newEnemy = Instantiate(enemyPrefabs[2], playerPosition, playerTransform.rotation);
             }
             
-            var tmpHealth = GetComponentInChildren<PlayerBar>().health;
+            var tmpHealth = GetComponentInChildren<PlayerBar>().prevHealth;
             
             yield return new WaitForEndOfFrame();
             
