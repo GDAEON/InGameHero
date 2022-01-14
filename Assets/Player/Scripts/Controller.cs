@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 using Enemies.Scripts;
 using TMPro;
 using UnityEngine;
@@ -33,6 +35,8 @@ namespace Player.Scripts
         [Header("Bodies")] 
         [SerializeField] private GameObject[] playerPrefabs;
         [SerializeField] private GameObject[] enemyPrefabs;
+
+        List<string> BodyTypes;
 
         private CharacterController _controller;
         private Camera _camera;
@@ -91,8 +95,12 @@ namespace Player.Scripts
             // Lock cursor
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-        }
 
+            BodyTypes = enemyPrefabs
+                .Select(prefab => prefab.tag.ToString()
+                .Replace("Enemy", "")//All the magic filtration happens here
+                .ToLower()).ToList();
+        }
         private void Start()
         {
             timeToChangeBody = 20;
@@ -184,8 +192,9 @@ namespace Player.Scripts
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
             foreach (var enemy in hitEnemies)
             {
-                enemy.GetComponentsInChildren<EnemyBar>()[0].SendMessage("TakeDamage", damage);
-                enemy.GetComponentsInChildren<EnemyBar>()[1].SendMessage("TakeDamage", damage * 3);
+                EnemyBar[] bars = enemy.GetComponentsInChildren<EnemyBar>();
+                bars[0].SendMessage("TakeDamage", damage);
+                bars[1].SendMessage("TakeDamage", damage * 3);
                 enemy.GetComponent<Animator>().SetTrigger(Hit);
             }
         }
@@ -207,23 +216,14 @@ namespace Player.Scripts
             var animator = GetComponentInChildren<PostProcessVolume>().gameObject.GetComponent<Animator>();
             // ReSharper disable once Unity.PreferNonAllocApi
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
-            var enemy = hitEnemies[0];
-            if (enemy.GetComponentsInChildren<EnemyBar>()[1].health <= 30 || enemy.GetComponentsInChildren<EnemyBar>()[0].health <= 30)
+            if (hitEnemies.Length > 0)
             {
-                if (enemy.CompareTag("DefaultEnemy"))
+                var enemy = hitEnemies[0];
+                EnemyBar[] bars = enemy.GetComponentsInChildren<EnemyBar>();
+                if (bars[1].health <= 30 || bars[0].health <= 30)
                 {
                     animator.SetTrigger(Agony);
-                    StartCoroutine(SpawnBody(0, enemy.gameObject));
-                }
-                else if (enemy.CompareTag("KunaiEnemy"))
-                {
-                    animator.SetTrigger(Agony);
-                    StartCoroutine(SpawnBody(1, enemy.gameObject));
-                }
-                else if (enemy.CompareTag("TankEnemy"))
-                {
-                    animator.SetTrigger(Agony);
-                    StartCoroutine(SpawnBody(2, enemy.gameObject));
+                    StartCoroutine(SpawnBody(GetBodyType(enemy.tag), enemy.gameObject));
                 }
             }
         }
@@ -232,29 +232,18 @@ namespace Player.Scripts
         private IEnumerator SpawnBody(int body, GameObject enemy)
         {
             yield return new WaitForSeconds(1f);
+
             var enemyTransform = enemy.transform;
             var enemyPosition = enemyTransform.position;
-            Instantiate(playerPrefabs[body], new Vector3(enemyPosition.x, enemyPosition.y + 1, enemyPosition.z), enemyTransform.rotation)
-                .GetComponentInChildren<PlayerBar>()
-                .prevHealth = enemy.GetComponentInChildren<EnemyBar>().health;
             var playerTransform = transform;
             var playerPosition = playerTransform.position;
 
-            GameObject newEnemy;
-            
-            if (gameObject.name.Contains("Default"))
-            {
-                newEnemy = Instantiate(enemyPrefabs[0], playerPosition, playerTransform.rotation);    
-            }
-            else if(gameObject.name.Contains("Kunai"))
-            {
-                newEnemy = Instantiate(enemyPrefabs[1], playerPosition, playerTransform.rotation);
-            }
-            else 
-            {
-                newEnemy = Instantiate(enemyPrefabs[2], playerPosition, playerTransform.rotation);
-            }
-            
+            Instantiate(playerPrefabs[body], new Vector3(enemyPosition.x, enemyPosition.y + 1, enemyPosition.z), enemyTransform.rotation)
+                .GetComponentInChildren<PlayerBar>()
+                .prevHealth = enemy.GetComponentInChildren<EnemyBar>().health;
+
+            GameObject newEnemy = Instantiate(enemyPrefabs[GetBodyType(gameObject.name)], playerPosition, playerTransform.rotation);
+
             var tmpHealth = GetComponentInChildren<PlayerBar>().prevHealth;
             
             yield return new WaitForEndOfFrame();
@@ -263,6 +252,16 @@ namespace Player.Scripts
 
             Destroy(enemy);
             Destroy(gameObject);
+        }
+
+        private int GetBodyType(string s)
+        {
+            s = s.ToLower();
+            foreach (var (item, index) in BodyTypes.Select((item, index) => (item, index)))
+            {
+                if (s.Contains(item)) return index;
+            }
+            return 0;
         }
 
         private void OnDrawGizmosSelected()

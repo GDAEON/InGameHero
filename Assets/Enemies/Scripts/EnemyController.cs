@@ -43,7 +43,7 @@ namespace Enemies.Scripts
 
         private void PlayAudioAttackSucces()
         {
-            _audioSource.clip = AudioClips[Random.Range(0, AudioClips.Count - 1)];
+            _audioSource.clip = AudioClips[Random.Range(0, AudioClips.Count)];
             _audioSource.Play();
         }
 
