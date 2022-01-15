@@ -13,7 +13,6 @@ namespace Player.Scripts
 {
     public class Controller : MonoBehaviour
     {
-        public DeathScript deathScript;
         [Header("Player settings")] [SerializeField]
         private float moveSpeed;
 
@@ -111,15 +110,13 @@ namespace Player.Scripts
         {
 
             if (healthBar.health <= 0)
-                deathScript.Setup();
+                gameObject.GetComponent<EndGameScript>().SetupDeathScreen();
             Look(_mLook);
             if (_controller.isGrounded)
             {
                 Move(_mMove);
             }
-
             ApplyGravity();
-
         }
 
         private IEnumerator ReduceTime()

@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace Enemies.Scripts
 {
@@ -10,6 +12,7 @@ namespace Enemies.Scripts
         private float _distance;
         public float attackRange;
         public float avoidRange;
+        public float escapeRange;
         private static readonly int Attack = Animator.StringToHash("Attack");
         private static readonly int Speed = Animator.StringToHash("Speed");
         private static readonly int RangeToPlayer = Animator.StringToHash("RangeToPlayer");
@@ -27,7 +30,25 @@ namespace Enemies.Scripts
                 _distance = Vector3.Distance(animator.transform.position, _playerTransform.position);
                 if (_distance < avoidRange)
                 {
-                    _agent.destination = animator.transform.position - _playerTransform.position;
+                    
+                }
+
+                if (_distance < escapeRange)
+                {
+                    NavMeshPath path = new NavMeshPath();
+                    Vector3 target = new Vector3();
+                    while (path.status != NavMeshPathStatus.PathComplete)
+                    {
+                        double angle = Random.Range(0, 359);
+                        double targetX = 5 * Math.Cos(angle);
+                        double targetY = 5 * Math.Sin(angle);
+                        var position = animator.transform.position;
+                        target = new Vector3(Convert.ToSingle(position.x + targetX),
+                            Convert.ToSingle(position.y + targetY), position.z);
+                        _agent.CalculatePath(target, path);
+                        
+                    }
+                    _agent.destination = target;
                 }
                 else
                 {

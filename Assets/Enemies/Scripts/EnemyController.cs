@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Player.Scripts;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Enemies.Scripts
 {
@@ -22,6 +24,7 @@ namespace Enemies.Scripts
 
         private void Start()
         {
+            GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Add(this);
             _healthbar = GetComponentInChildren<Healthbar>();
             _animator = GetComponent<Animator>();
             _audioSource = GetComponent<AudioSource>();
@@ -31,6 +34,7 @@ namespace Enemies.Scripts
         {
             if (_healthbar.health == 0 && !_isDead)
             {
+                GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Remove(this);
                 GetComponent<Collider>().enabled = false;
                 _animator.SetTrigger(Death);
                 _isDead = true;
