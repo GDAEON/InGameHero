@@ -29,7 +29,7 @@ namespace Enemies.Weapon.Kunai.Scripts
                 _audioSource.clip = targetOther;
                 _audioSource.Play();
             }
-            Destroy(gameObject, 10);
+            Destroy(gameObject, 0.2f);
         }
     }
 }

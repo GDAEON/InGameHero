@@ -250,6 +250,7 @@ namespace Player.Scripts
             newEnemy.GetComponentInChildren<EnemyBar>().SetHealth(tmpHealth);
 
             Destroy(enemy);
+            GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Remove(enemy.GetComponent<EnemyController>());
             Destroy(gameObject);
         }
 
