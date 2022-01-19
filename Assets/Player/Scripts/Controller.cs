@@ -234,13 +234,7 @@ namespace Player.Scripts
             var enemyPosition = enemyTransform.position;
             var playerTransform = transform;
             var playerPosition = playerTransform.position;
-
-            Destroy(GetComponentInChildren<AudioListener>());
-            GameObject playerBody = Instantiate(playerPrefabs[body], new Vector3(enemyPosition.x, enemyPosition.y + 1, enemyPosition.z), enemyTransform.rotation);
-            playerBody
-                .GetComponentInChildren<PlayerBar>()
-                .prevHealth = enemy.GetComponentInChildren<EnemyBar>().health;
-            playerBody.AddComponent<AudioListener>();
+            
             GameObject newEnemy = Instantiate(enemyPrefabs[GetBodyType(gameObject.name)], playerPosition, playerTransform.rotation);
 
             var tmpHealth = GetComponentInChildren<PlayerBar>().prevHealth;
@@ -249,6 +243,9 @@ namespace Player.Scripts
             
             newEnemy.GetComponentInChildren<EnemyBar>().SetHealth(tmpHealth);
 
+            Instantiate(playerPrefabs[body], new Vector3(enemyPosition.x, enemyPosition.y + 1, enemyPosition.z), enemyTransform.rotation)
+                .GetComponentInChildren<PlayerBar>()
+                .prevHealth = enemy.GetComponentInChildren<EnemyBar>().health;
             Destroy(enemy);
             GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Remove(enemy.GetComponent<EnemyController>());
             Destroy(gameObject);
