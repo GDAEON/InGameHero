@@ -35,7 +35,7 @@ namespace Player.Scripts
         [SerializeField] private GameObject[] playerPrefabs;
         [SerializeField] private GameObject[] enemyPrefabs;
 
-        List<string> BodyTypes;
+        private List<string> _bodyTypes;
 
         private CharacterController _controller;
         private Camera _camera;
@@ -95,7 +95,7 @@ namespace Player.Scripts
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            BodyTypes = enemyPrefabs
+            _bodyTypes = enemyPrefabs
                 .Select(prefab => prefab.tag.ToString()
                 .Replace("Enemy", "")//All the magic filtration happens here
                 .ToLower()).ToList();
@@ -254,7 +254,7 @@ namespace Player.Scripts
         private int GetBodyType(string s)
         {
             s = s.ToLower();
-            foreach (var (item, index) in BodyTypes.Select((item, index) => (item, index)))
+            foreach (var (item, index) in _bodyTypes.Select((item, index) => (item, index)))
             {
                 if (s.Contains(item)) return index;
             }
