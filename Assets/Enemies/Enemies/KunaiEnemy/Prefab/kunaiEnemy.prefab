@@ -1327,6 +1327,7 @@ GameObject:
   - component: {fileID: 1403500311}
   - component: {fileID: 1530225220}
   - component: {fileID: 1530225221}
+  - component: {fileID: 988672595030147691}
   - component: {fileID: 2139666474}
   m_Layer: 6
   m_Name: kunaiEnemy
@@ -1385,6 +1386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b82318885c9b9049923759796716b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arm: {fileID: 0}
   kunai: {fileID: 4563033882388818186}
   projectile: {fileID: 4212439491921548205, guid: 146bcd2243822874aaafa2ce28d25548, type: 3}
 --- !u!136 &1403500311
@@ -1436,13 +1438,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 0}
-  AudioClips: []
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
   attackPoint: []
   lastHitIndicator: {fileID: 7910625836818617388}
   attackRange: 0
+--- !u!114 &988672595030147691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7589555126836003222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8fa5948edd6b7429a7cd3ba54d165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackClips:
+  - {fileID: 8300000, guid: 318cf31f5e6fdb64bb6a7e2ddacbd2dc, type: 3}
+  dealDamageClips: []
+  takeDamageClips: []
+  deathClips: []
 --- !u!82 &2139666474
 AudioSource:
   m_ObjectHideFlags: 0

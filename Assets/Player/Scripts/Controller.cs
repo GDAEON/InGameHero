@@ -181,12 +181,15 @@ namespace Player.Scripts
 
         private void Attack()
         {
-            
             StartCoroutine(HandleAttackAnimation());
-            
-    
+        }
+
+        public void DealDamage()
+        {
             // ReSharper disable once Unity.PreferNonAllocApi
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
+            if(hitEnemies.Length > 0)
+                GetComponent<AudioController>().DealDamageSound();
             foreach (var enemy in hitEnemies)
             {
                 EnemyBar[] bars = enemy.GetComponentsInChildren<EnemyBar>();

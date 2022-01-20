@@ -74118,7 +74118,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.6
-    functionName: PlayAudio
+    functionName: AttackSound
     data: 
     objectReferenceParameter: {fileID: 8300000, guid: 318cf31f5e6fdb64bb6a7e2ddacbd2dc, type: 3}
     floatParameter: 0
