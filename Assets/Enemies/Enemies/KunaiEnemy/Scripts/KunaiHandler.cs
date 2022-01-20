@@ -4,6 +4,7 @@ namespace Enemies.Enemies.KunaiEnemy.Scripts
 {
     public class KunaiHandler : MonoBehaviour
     {
+        [SerializeField] private GameObject arm;
         [SerializeField] private GameObject kunai;
         [SerializeField] private GameObject projectile;
         
@@ -25,7 +26,7 @@ namespace Enemies.Enemies.KunaiEnemy.Scripts
 
             if (gameObject.CompareTag("Player"))
             {
-                rb.AddForce(transform.forward * 20, ForceMode.Impulse);
+                rb.AddForce(arm.transform.forward * 20, ForceMode.Impulse);
             }
             else
             {
