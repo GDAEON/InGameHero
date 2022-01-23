@@ -9,7 +9,8 @@ namespace Enemies.Scripts
 {
     public class EnemyController : MonoBehaviour
     {
-        private bool _isDead;
+        public bool isDead;
+        
         private Healthbar _healthbar;
         private Animator _animator;
         public Material material;
@@ -29,17 +30,17 @@ namespace Enemies.Scripts
 
         private void Update()
         {
-            if (_healthbar.health == 0 && !_isDead)
+            if (_healthbar.health == 0 && !isDead)
             {
                 GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Remove(this);
                 GetComponent<Collider>().enabled = false;
                 _animator.SetTrigger(Death);
-                _isDead = true;
+                isDead = true;
                 Destroy(gameObject, 5);
             }
             var health = GetComponentsInChildren<EnemyBar>()[0];
             var stamina = GetComponentsInChildren<EnemyBar>()[1];
-            lastHitIndicator.SetActive(stamina.health <= 30 || health.health <= 30);
+            lastHitIndicator.SetActive(stamina.health <= 30 || health.health <= 30 && !isDead);
         }
         
 

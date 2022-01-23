@@ -220,7 +220,7 @@ namespace Player.Scripts
             {
                 var enemy = hitEnemies[0];
                 EnemyBar[] bars = enemy.GetComponentsInChildren<EnemyBar>();
-                if (bars[1].health <= 30 || bars[0].health <= 30)
+                if (bars[1].health <= 30 || bars[0].health <= 30 && !enemy.GetComponent<EnemyController>().isDead)
                 {
                     animator.SetTrigger(Agony);
                     StartCoroutine(SpawnBody(GetBodyType(enemy.tag), enemy.gameObject));
