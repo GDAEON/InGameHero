@@ -1327,6 +1327,7 @@ GameObject:
   - component: {fileID: 1403500311}
   - component: {fileID: 1530225220}
   - component: {fileID: 1530225221}
+  - component: {fileID: 2644309616684985642}
   - component: {fileID: 988672595030147691}
   - component: {fileID: 2139666474}
   m_Layer: 6
@@ -1364,7 +1365,7 @@ Animator:
   m_GameObject: {fileID: 7589555126836003222}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d6d889b8844220748853cda59432533d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 428c1399ec486d74b8a6ec71999b85b6, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5c4cebd99b8a5bb4788b2564dd7be8e1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1444,6 +1445,18 @@ MonoBehaviour:
   attackPoint: []
   lastHitIndicator: {fileID: 7910625836818617388}
   attackRange: 0
+--- !u!114 &2644309616684985642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7589555126836003222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c723ff1828aaeb34c8505850e0d9e8e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &988672595030147691
 MonoBehaviour:
   m_ObjectHideFlags: 0
