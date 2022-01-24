@@ -7,7 +7,8 @@ namespace Enemies.Enemies.Boss.Scripts
     public class Shield : StateMachineBehaviour
     {
         [SerializeField] private GameObject[] enemies;
-        
+        private static readonly int LowerTheShields = Animator.StringToHash("LowerTheShields");
+
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             Transform transform;
@@ -32,7 +33,7 @@ namespace Enemies.Enemies.Boss.Scripts
             var aliveEnemies = FindObjectsOfType<EnemyController>();
             if (aliveEnemies.Length == 1 && aliveEnemies[0].isDead)
             {
-                Debug.Log("Нужно опускать щиты");
+                animator.SetTrigger(LowerTheShields);
             }
         }
 
