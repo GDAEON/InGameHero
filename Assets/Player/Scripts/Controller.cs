@@ -258,7 +258,8 @@ namespace Player.Scripts
                 .GetComponentInChildren<PlayerBar>()
                 .prevHealth = enemy.GetComponentInChildren<EnemyBar>().health;
             Destroy(enemy);
-            GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Remove(enemy.GetComponent<EnemyController>());
+            if(GameObject.FindWithTag("EnemyCounter"))
+                GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Remove(enemy.GetComponent<EnemyController>());
             Destroy(gameObject);
         }
 
