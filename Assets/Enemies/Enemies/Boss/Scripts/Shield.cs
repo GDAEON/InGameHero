@@ -11,6 +11,8 @@ namespace Enemies.Enemies.Boss.Scripts
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            animator.ResetTrigger(LowerTheShields);
+            
             Transform transform;
             (transform = animator.transform).Find("EnergyShield").gameObject.SetActive(true);
 
