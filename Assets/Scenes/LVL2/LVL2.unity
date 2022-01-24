@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.2183944, g: 0.2796787, b: 0.2176899, a: 1}
+  m_IndirectSpecularColor: {r: 0.018614275, g: 0.141015, b: 0.031221922, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8594,7 +8594,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies: []
-  winScene: {fileID: 2106877451}
 --- !u!4 &713013653
 Transform:
   m_ObjectHideFlags: 0
@@ -28486,17 +28485,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 538c7920d89519346a1b895cc8710320, type: 3}
---- !u!114 &2106877451 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1997468946, guid: 538c7920d89519346a1b895cc8710320, type: 3}
-  m_PrefabInstance: {fileID: 2106877450}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 393f3944579bbed4a9f20075f2132a0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2115355635 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4979550671179526, guid: 8b4141ff278aa944e95d5357a1b9ad86, type: 3}

@@ -23,7 +23,8 @@ namespace Enemies.Scripts
 
         private void Start()
         {
-            GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Add(this);
+            if(GameObject.FindWithTag("EnemyCounter"))
+                GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Add(this);
             _healthbar = GetComponentInChildren<Healthbar>();
             _animator = GetComponent<Animator>();
         }
@@ -32,7 +33,8 @@ namespace Enemies.Scripts
         {
             if (_healthbar.health == 0 && !isDead)
             {
-                GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Remove(this);
+                if(GameObject.FindWithTag("EnemyCounter"))
+                    GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Remove(this);
                 GetComponent<Collider>().enabled = false;
                 _animator.SetTrigger(Death);
                 isDead = true;

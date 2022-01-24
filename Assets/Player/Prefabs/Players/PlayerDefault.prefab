@@ -958,6 +958,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  bossLayer:
+    serializedVersion: 2
+    m_Bits: 512
   attackPoint: {fileID: 3450505716461034875}
   attackRange: 0.84
   healthBar: {fileID: 3172441968296081290}
@@ -1332,7 +1335,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 247
+    m_Bits: 759
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

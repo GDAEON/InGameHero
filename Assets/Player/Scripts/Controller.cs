@@ -24,6 +24,7 @@ namespace Player.Scripts
         private float damage;
 
         [SerializeField] private LayerMask enemyLayer;
+        [SerializeField] private LayerMask bossLayer;
         [SerializeField] private Transform attackPoint;
         [SerializeField] private float attackRange;
         [SerializeField] private PlayerBar healthBar;
@@ -102,7 +103,6 @@ namespace Player.Scripts
         }
         private void Start()
         {
-            timeToChangeBody = 20;
             StartCoroutine(ReduceTime());
         }
 
@@ -197,6 +197,14 @@ namespace Player.Scripts
                 bars[1].SendMessage("TakeDamage", damage * 3);
                 enemy.GetComponent<Animator>().SetTrigger(Hit);
             }
+            
+            // ReSharper disable once Unity.PreferNonAllocApi
+            var hitBosses = Physics.OverlapSphere(attackPoint.position, attackRange, bossLayer);
+            foreach (var boss in hitBosses)
+            {
+                var healtbar = boss.GetComponentInChildren<Healthbar>();
+                healtbar.SendMessage("TakeDamage", damage);
+            }
         }
 
         private IEnumerator HandleAttackAnimation()
@@ -250,7 +258,8 @@ namespace Player.Scripts
                 .GetComponentInChildren<PlayerBar>()
                 .prevHealth = enemy.GetComponentInChildren<EnemyBar>().health;
             Destroy(enemy);
-            GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Remove(enemy.GetComponent<EnemyController>());
+            if(GameObject.FindWithTag("EnemyCounter"))
+                GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Remove(enemy.GetComponent<EnemyController>());
             Destroy(gameObject);
         }
 
