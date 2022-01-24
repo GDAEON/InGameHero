@@ -69,6 +69,7 @@ MonoBehaviour:
   - {fileID: 788082342254297921, guid: 51809109bc9b54c49bd9b3fa13e036a3, type: 3}
   - {fileID: 7589555126836003222, guid: d3feb0cf1103bde41a95b8fb8abc0d36, type: 3}
   - {fileID: 2750010169279668031, guid: 2635fb0e967d4c244ac0c99283335b66, type: 3}
+  startPoint: {x: 43.63287, y: 10.15, z: 10.88405}
 --- !u!114 &-2452554802034107427
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -125,7 +126,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: Timer
-    m_EventTreshold: 0.01
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 0}
   m_Solo: 0
