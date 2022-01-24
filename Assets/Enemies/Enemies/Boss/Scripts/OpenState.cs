@@ -6,7 +6,7 @@ namespace Enemies.Enemies.Boss.Scripts
     {
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            
+            animator.transform.Find("EnergyShield").gameObject.SetActive(false);
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
