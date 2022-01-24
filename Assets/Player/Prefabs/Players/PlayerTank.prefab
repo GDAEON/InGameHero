@@ -496,6 +496,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  bossLayer:
+    serializedVersion: 2
+    m_Bits: 512
   attackPoint: {fileID: 2737291724954633303}
   attackRange: 0.84
   healthBar: {fileID: 8769784764415742579}
