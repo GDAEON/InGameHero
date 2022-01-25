@@ -277,5 +277,10 @@ namespace Player.Scripts
         {
             Gizmos.DrawWireSphere(attackPoint.position, attackRange);
         }
+        public void AddTime(int amount)
+        {
+            timeToChangeBody += amount;
+            timer.text = timeToChangeBody.ToString();
+        }
     }
 }
