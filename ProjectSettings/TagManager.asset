@@ -9,6 +9,8 @@ TagManager:
   - KunaiEnemy
   - TankEnemy
   - Kunai
+  - LvlChanger
+  - EnemyCounter
   layers:
   - Default
   - TransparentFX
