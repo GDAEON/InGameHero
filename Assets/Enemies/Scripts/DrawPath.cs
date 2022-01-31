@@ -10,8 +10,7 @@ public class DrawPath : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
     }
-
-    // Update is called once per frame
+    
     void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
