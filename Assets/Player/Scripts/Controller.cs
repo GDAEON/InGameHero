@@ -13,9 +13,8 @@ namespace Player.Scripts
 {
     public class Controller : MonoBehaviour
     {
-        [Header("Player settings")]
-        [SerializeField] private float moveSpeed;
-        [SerializeField] private float voidDeathLevel = -50;//dead_zone
+        [Header("Player settings")] [SerializeField]
+        private float moveSpeed;
 
         [SerializeField] private float cameraSensitivity;
         [SerializeField] private float gravity = 9.81f;
@@ -39,6 +38,8 @@ namespace Player.Scripts
 
         private List<string> _bodyTypes;
 
+        private InputActionReference _actionReference;
+        private TimeManager _timeManager = new TimeManager();
         private CharacterController _controller;
         private Camera _camera;
         private bool _mCharging;
@@ -53,6 +54,13 @@ namespace Player.Scripts
         private static readonly int AttackTrigger = Animator.StringToHash("Attack");
         private static readonly int JumpTrigger = Animator.StringToHash("Jump");
 
+        public void OnSlowMotion(InputAction.CallbackContext context)
+        {
+            if (context.phase == InputActionPhase.Started)
+                _timeManager.DoSlowmotion();
+            if (context.phase == InputActionPhase.Canceled)
+                _timeManager.ResetTimeScale();
+        }
         public void OnMove(InputAction.CallbackContext context)
         {
             _mMove = context.ReadValue<Vector2>();
@@ -83,7 +91,13 @@ namespace Player.Scripts
         public void OnAgony(InputAction.CallbackContext context)
         {
             if (context.phase == InputActionPhase.Started)
+                _timeManager.DoSlowmotion();
+
+            if (context.phase == InputActionPhase.Canceled)
+            {
                 Transmit();
+                _timeManager.ResetTimeScale();
+            }
         }
 
         private void Awake()
@@ -109,7 +123,6 @@ namespace Player.Scripts
 
         public void Update()
         {
-            if (transform.position.y < voidDeathLevel) healthBar.SetHealth(0);//dead_zone
             if (healthBar.health <= 0)
                 gameObject.GetComponent<EndGameScript>().SetupDeathScreen();
             Look(_mLook);
@@ -284,4 +297,5 @@ namespace Player.Scripts
             timer.text = timeToChangeBody.ToString();
         }
     }
+    
 }
