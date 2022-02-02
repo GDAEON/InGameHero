@@ -13,8 +13,9 @@ namespace Player.Scripts
 {
     public class Controller : MonoBehaviour
     {
-        [Header("Player settings")] [SerializeField]
-        private float moveSpeed;
+        [Header("Player settings")]
+        [SerializeField] private float moveSpeed;
+        [SerializeField] private float voidDeathLevel = -50;//dead_zone
 
         [SerializeField] private float cameraSensitivity;
         [SerializeField] private float gravity = 9.81f;
@@ -108,7 +109,7 @@ namespace Player.Scripts
 
         public void Update()
         {
-
+            if (transform.position.y < voidDeathLevel) healthBar.SetHealth(0);//dead_zone
             if (healthBar.health <= 0)
                 gameObject.GetComponent<EndGameScript>().SetupDeathScreen();
             Look(_mLook);
