@@ -3,14 +3,16 @@ using System.Collections;
 using Enemies.Scripts;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
 using Random = System.Random;
 
 public class PlayerControllerFirst : MonoBehaviour
 {
-    [Header("Player settings")] [SerializeField]
-    private float moveSpeed;
+    [Header("Player settings")]
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float voidDeathLevel = -50;//dead_zone
 
     [SerializeField] private float cameraSensitivity;
     [SerializeField] private float gravity = 9.81f;
@@ -53,6 +55,8 @@ public class PlayerControllerFirst : MonoBehaviour
 
     public void Update()
     {
+        if (transform.position.y < voidDeathLevel) 
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);//dead_zone
         Look(_mLook);
         if (_controller.isGrounded)
         {
