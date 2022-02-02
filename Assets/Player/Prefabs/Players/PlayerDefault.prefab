@@ -912,7 +912,7 @@ GameObject:
   - component: {fileID: 7861806473670085248}
   - component: {fileID: 4179779031619186609}
   - component: {fileID: 5918539437489638965}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: PlayerDefault
   m_TagString: Player
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
