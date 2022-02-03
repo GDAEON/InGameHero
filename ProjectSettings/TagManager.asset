@@ -11,6 +11,8 @@ TagManager:
   - Kunai
   - LvlChanger
   - EnemyCounter
+  - TransmitCamera
+  - Agony
   layers:
   - Default
   - TransparentFX

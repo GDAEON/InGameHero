@@ -6,23 +6,24 @@ using Enemies.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.PostProcessing;
 using Random = System.Random;
 
 namespace Player.Scripts
 {
     public class Controller : MonoBehaviour
     {
-        [Header("Player settings")] [SerializeField]
-        private float moveSpeed;
-
+        [Header("Transmit settings")]
+        [SerializeField] private Material transmitMaterial;
+        [SerializeField] private Camera transmitCamera;
+        
+        [Header("Player settings")]
+        [SerializeField] private float moveSpeed;
         [SerializeField] private float cameraSensitivity;
         [SerializeField] private float gravity = 9.81f;
         [SerializeField] private float jumpPower;
 
-        [Header("Fight settings")] [SerializeField]
-        private float damage;
-
+        [Header("Fight settings")]
+        [SerializeField] private float damage;
         [SerializeField] private LayerMask enemyLayer;
         [SerializeField] private LayerMask bossLayer;
         [SerializeField] private Transform attackPoint;
@@ -37,7 +38,8 @@ namespace Player.Scripts
         [SerializeField] private GameObject[] enemyPrefabs;
 
         private List<string> _bodyTypes;
-
+        private bool _transmit = false;
+        private float _fumble;
         private InputActionReference _actionReference;
         private TimeManager _timeManager = new TimeManager();
         private CharacterController _controller;
@@ -53,6 +55,7 @@ namespace Player.Scripts
         private static readonly int Hit = Animator.StringToHash("Hit");
         private static readonly int AttackTrigger = Animator.StringToHash("Attack");
         private static readonly int JumpTrigger = Animator.StringToHash("Jump");
+        private static readonly int FumbleSpeed = Shader.PropertyToID("_FumbleSpeed");
 
         public void OnSlowMotion(InputAction.CallbackContext context)
         {
@@ -91,10 +94,18 @@ namespace Player.Scripts
         public void OnAgony(InputAction.CallbackContext context)
         {
             if (context.phase == InputActionPhase.Started)
+            {
+                _fumble = 1;
+                _camera.enabled = false;
+                transmitCamera.enabled = true;
+                _transmit = true;
                 _timeManager.DoSlowmotion();
+            }
 
             if (context.phase == InputActionPhase.Canceled)
             {
+                _camera.enabled = true;
+                transmitCamera.enabled = false;
                 Transmit();
                 _timeManager.ResetTimeScale();
             }
@@ -103,7 +114,6 @@ namespace Player.Scripts
         private void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
-            
             _camera = GetComponentInChildren<Camera>();
             _controller = GetComponent<CharacterController>();
 
@@ -123,6 +133,12 @@ namespace Player.Scripts
 
         public void Update()
         {
+            if (_transmit)
+            {
+                _fumble += 0.1f;
+                transmitMaterial.SetFloat(FumbleSpeed, _fumble);
+            }
+
             if (healthBar.health <= 0)
                 gameObject.GetComponent<EndGameScript>().SetupDeathScreen();
             Look(_mLook);
@@ -235,7 +251,7 @@ namespace Player.Scripts
 
         private void Transmit()
         {
-            var animator = GetComponentInChildren<PostProcessVolume>().gameObject.GetComponent<Animator>();
+            var animator = GameObject.FindWithTag("Agony").GetComponent<Animator>();
             // ReSharper disable once Unity.PreferNonAllocApi
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
             if (hitEnemies.Length > 0)
@@ -248,6 +264,7 @@ namespace Player.Scripts
                     StartCoroutine(SpawnBody(GetBodyType(enemy.tag), enemy.gameObject));
                 }
             }
+            _transmit = false;
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
