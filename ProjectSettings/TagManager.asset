@@ -13,6 +13,7 @@ TagManager:
   - EnemyCounter
   - TransmitCamera
   - Agony
+  - TransmitVolume
   layers:
   - Default
   - TransparentFX
