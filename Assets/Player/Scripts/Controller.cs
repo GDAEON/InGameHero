@@ -97,23 +97,23 @@ namespace Player.Scripts
         {
             if (context.phase == InputActionPhase.Started)
             {
-                var animator = GameObject.FindWithTag("TransmitVolume").GetComponent<Animator>();
-                animator.SetTrigger(TransmitEnter);
                 _fumble = 1;
                 _camera.enabled = false;
                 transmitCamera.enabled = true;
                 _transmit = true;
                 _timeManager.DoSlowmotion();
+                var animator = GameObject.FindWithTag("TransmitVolume").GetComponent<Animator>();
+                animator.SetTrigger(TransmitEnter);
             }
 
             if (context.phase == InputActionPhase.Canceled)
             {
-                var animator = GameObject.FindWithTag("TransmitVolume").GetComponent<Animator>();
-                animator.SetTrigger(TransmitExit);
                 _camera.enabled = true;
                 transmitCamera.enabled = false;
                 Transmit();
                 _timeManager.ResetTimeScale();
+                var animator = GameObject.FindWithTag("TransmitVolume").GetComponent<Animator>();
+                animator.SetTrigger(TransmitExit);
             }
         }
 
