@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
 public class ChaseKunaiBehavior : StateMachineBehaviour
 {
@@ -16,7 +12,8 @@ public class ChaseKunaiBehavior : StateMachineBehaviour
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _playerTransform = GameObject.FindWithTag("Player").transform;
+        if(GameObject.FindWithTag("Player"))
+            _playerTransform = GameObject.FindWithTag("Player").transform;
         _agent = animator.GetComponentInParent<NavMeshAgent>();
         _agent.stoppingDistance = 5;
     }
