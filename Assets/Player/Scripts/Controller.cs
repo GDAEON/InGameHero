@@ -56,6 +56,8 @@ namespace Player.Scripts
         private static readonly int AttackTrigger = Animator.StringToHash("Attack");
         private static readonly int JumpTrigger = Animator.StringToHash("Jump");
         private static readonly int FumbleSpeed = Shader.PropertyToID("_FumbleSpeed");
+        private static readonly int TransmitEnter = Animator.StringToHash("TransmitEnter");
+        private static readonly int TransmitExit = Animator.StringToHash("TransmitExit");
 
         public void OnSlowMotion(InputAction.CallbackContext context)
         {
@@ -100,6 +102,8 @@ namespace Player.Scripts
                 transmitCamera.enabled = true;
                 _transmit = true;
                 _timeManager.DoSlowmotion();
+                var animator = GameObject.FindWithTag("TransmitVolume").GetComponent<Animator>();
+                animator.SetTrigger(TransmitEnter);
             }
 
             if (context.phase == InputActionPhase.Canceled)
@@ -108,6 +112,8 @@ namespace Player.Scripts
                 transmitCamera.enabled = false;
                 Transmit();
                 _timeManager.ResetTimeScale();
+                var animator = GameObject.FindWithTag("TransmitVolume").GetComponent<Animator>();
+                animator.SetTrigger(TransmitExit);
             }
         }
 
