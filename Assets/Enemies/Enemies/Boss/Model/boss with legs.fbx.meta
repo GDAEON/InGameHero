@@ -1,17 +1,8 @@
 fileFormatVersion: 2
-guid: 61026edf98c783e47b3dde94f3aca088
+guid: ac959f4b1e6fbed42b2933873b81692c
 ModelImporter:
   serializedVersion: 21202
-  internalIDToNameTable:
-  - first:
-      74: 6917005492960053097
-    second: Icosphere|CameraAction
-  - first:
-      74: 4767819270619715706
-    second: Dodecahedron|CameraAction
-  - first:
-      74: 1009187770161788081
-    second: Dodecahedron.001|CameraAction
+  internalIDToNameTable: []
   externalObjects: {}
   materials:
     materialImportMode: 2
