@@ -20,8 +20,7 @@ public class SkinnedMeshToMesh : MonoBehaviour
             Mesh mesh = new Mesh();
             skinnedMesh.BakeMesh(mesh);
             visualEffect.SetMesh("Mesh", mesh);
+            yield return new WaitForSeconds(updateRate);
         }
-
-        yield return new WaitForSeconds(updateRate);
     }
 }
