@@ -348,6 +348,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  bossLayer:
+    serializedVersion: 2
+    m_Bits: 0
   attackPoint: {fileID: 4940206569534698676}
   attackRange: 0.84
   healthBar: {fileID: 1990478744}
@@ -534,7 +537,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1226,6 +1229,7 @@ MonoBehaviour:
   highHealthColor: {r: 0.26779994, g: 0.9622642, b: 0.26779994, a: 1}
   mediumHealthColor: {r: 0.26666668, g: 0.9607843, b: 0.26666668, a: 1}
   lowHealthColor: {r: 0.26666668, g: 0.9607843, b: 0.26666668, a: 1}
+  prevHealth: 100
 --- !u!114 &114370366233609482 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114370365347748904, guid: a3ccfa4c81086344fb6b0b2c6e0d76de, type: 3}
@@ -1528,6 +1532,7 @@ MonoBehaviour:
   highHealthColor: {r: 1, g: 0.36114806, b: 0.34901965, a: 1}
   mediumHealthColor: {r: 1, g: 0.60509616, b: 0.4470588, a: 1}
   lowHealthColor: {r: 0.9622642, g: 0.8578676, b: 0.8578676, a: 1}
+  prevHealth: 100
 --- !u!114 &4979134622070552069 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114370365347748904, guid: a3ccfa4c81086344fb6b0b2c6e0d76de, type: 3}
@@ -1845,6 +1850,7 @@ MonoBehaviour:
   highHealthColor: {r: 0.26779994, g: 0.9622642, b: 0.26779994, a: 1}
   mediumHealthColor: {r: 0.26666668, g: 0.9607843, b: 0.26666668, a: 1}
   lowHealthColor: {r: 0.26666668, g: 0.9607843, b: 0.26666668, a: 1}
+  prevHealth: 100
 --- !u!114 &4979134621115654008 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114370365347748904, guid: a3ccfa4c81086344fb6b0b2c6e0d76de, type: 3}
