@@ -1,29 +1,27 @@
 using System;
-using System.Linq;
 using System.Collections;
-using System.Collections.Generic;
 using Enemies.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.PostProcessing;
 using Random = System.Random;
 
 namespace Player.Scripts
 {
     public class Controller : MonoBehaviour
     {
-        [Header("Transmit settings")]
-        [SerializeField] private Material transmitMaterial;
-        [SerializeField] private Camera transmitCamera;
-        
-        [Header("Player settings")]
-        [SerializeField] private float moveSpeed;
+        public DeathScript deathScript;
+        [Header("Player settings")] [SerializeField]
+        private float moveSpeed;
+
         [SerializeField] private float cameraSensitivity;
         [SerializeField] private float gravity = 9.81f;
         [SerializeField] private float jumpPower;
 
-        [Header("Fight settings")]
-        [SerializeField] private float damage;
+        [Header("Fight settings")] [SerializeField]
+        private float damage;
+
         [SerializeField] private LayerMask enemyLayer;
         [SerializeField] private LayerMask bossLayer;
         [SerializeField] private Transform attackPoint;
@@ -37,15 +35,9 @@ namespace Player.Scripts
         [SerializeField] private GameObject[] playerPrefabs;
         [SerializeField] private GameObject[] enemyPrefabs;
 
-        private List<string> _bodyTypes;
-        private bool _transmit = false;
-        private float _fumble;
-        private InputActionReference _actionReference;
-        private TimeManager _timeManager = new TimeManager();
         private CharacterController _controller;
         private Camera _camera;
         private bool _mCharging;
-        private bool _canAttack = true;
         private Vector2 _mRotation;
         private Vector2 _mLook;
         private Vector2 _mMove;
@@ -55,17 +47,7 @@ namespace Player.Scripts
         private static readonly int Hit = Animator.StringToHash("Hit");
         private static readonly int AttackTrigger = Animator.StringToHash("Attack");
         private static readonly int JumpTrigger = Animator.StringToHash("Jump");
-        private static readonly int FumbleSpeed = Shader.PropertyToID("_FumbleSpeed");
-        private static readonly int TransmitEnter = Animator.StringToHash("TransmitEnter");
-        private static readonly int TransmitExit = Animator.StringToHash("TransmitExit");
 
-        public void OnSlowMotion(InputAction.CallbackContext context)
-        {
-            if (context.phase == InputActionPhase.Started)
-                _timeManager.DoSlowmotion();
-            if (context.phase == InputActionPhase.Canceled)
-                _timeManager.ResetTimeScale();
-        }
         public void OnMove(InputAction.CallbackContext context)
         {
             _mMove = context.ReadValue<Vector2>();
@@ -86,7 +68,7 @@ namespace Player.Scripts
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.phase == InputActionPhase.Started && staminaBar.health >= 25 && _canAttack)
+            if (context.phase == InputActionPhase.Started && staminaBar.health >= 25)
             {
                 Attack();
                 staminaBar.TakeDamage(25);
@@ -96,63 +78,40 @@ namespace Player.Scripts
         public void OnAgony(InputAction.CallbackContext context)
         {
             if (context.phase == InputActionPhase.Started)
-            {
-                _fumble = 1;
-                _camera.enabled = false;
-                transmitCamera.enabled = true;
-                _transmit = true;
-                _timeManager.DoSlowmotion();
-                var animator = GameObject.FindWithTag("TransmitVolume").GetComponent<Animator>();
-                animator.SetTrigger(TransmitEnter);
-            }
-
-            if (context.phase == InputActionPhase.Canceled)
-            {
-                _camera.enabled = true;
-                transmitCamera.enabled = false;
                 Transmit();
-                _timeManager.ResetTimeScale();
-                var animator = GameObject.FindWithTag("TransmitVolume").GetComponent<Animator>();
-                animator.SetTrigger(TransmitExit);
-            }
         }
 
         private void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
+            
             _camera = GetComponentInChildren<Camera>();
             _controller = GetComponent<CharacterController>();
 
             // Lock cursor
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-
-            _bodyTypes = enemyPrefabs
-                .Select(prefab => prefab.tag.ToString()
-                .Replace("Enemy", "")//All the magic filtration happens here
-                .ToLower()).ToList();
         }
+
         private void Start()
         {
+            timeToChangeBody = 20;
             StartCoroutine(ReduceTime());
         }
 
         public void Update()
         {
-            if (_transmit)
-            {
-                _fumble += 0.1f;
-                transmitMaterial.SetFloat(FumbleSpeed, _fumble);
-            }
 
             if (healthBar.health <= 0)
-                gameObject.GetComponent<EndGameScript>().SetupDeathScreen();
+                deathScript.Setup();
             Look(_mLook);
             if (_controller.isGrounded)
             {
                 Move(_mMove);
             }
+
             ApplyGravity();
+
         }
 
         private IEnumerator ReduceTime()
@@ -217,108 +176,102 @@ namespace Player.Scripts
 
         private void Attack()
         {
+            
             StartCoroutine(HandleAttackAnimation());
-        }
-
-        public void DealDamage()
-        {
+            
+    
             // ReSharper disable once Unity.PreferNonAllocApi
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
-            if(hitEnemies.Length > 0)
-                GetComponent<AudioController>().DealDamageSound();
             foreach (var enemy in hitEnemies)
             {
-                EnemyBar[] bars = enemy.GetComponentsInChildren<EnemyBar>();
-                bars[0].SendMessage("TakeDamage", damage);
-                bars[1].SendMessage("TakeDamage", damage * 3);
+                enemy.GetComponentsInChildren<EnemyBar>()[0].SendMessage("TakeDamage", damage);
+                enemy.GetComponentsInChildren<EnemyBar>()[1].SendMessage("TakeDamage", damage * 3);
                 enemy.GetComponent<Animator>().SetTrigger(Hit);
             }
             
-            // ReSharper disable once Unity.PreferNonAllocApi
-            var hitBosses = Physics.OverlapSphere(attackPoint.position, attackRange, bossLayer);
-            foreach (var boss in hitBosses)
+            hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, bossLayer);
+            
+
+            foreach (var enemy in hitEnemies)
             {
-                var healtbar = boss.GetComponentInChildren<Healthbar>();
-                healtbar.SendMessage("TakeDamage", damage);
+                //TODO final game
             }
         }
 
         private IEnumerator HandleAttackAnimation()
         {
-            _canAttack = false;
             var random = new Random();
             _animator.SetInteger(AttackTrigger, random.Next(0, 3));
             yield return new WaitForEndOfFrame();
-            var animationDuration = _animator.GetNextAnimatorClipInfo(0)[0].clip.length;
             _animator.SetInteger(AttackTrigger, -1);
-            yield return new WaitForSeconds(animationDuration);
-            _canAttack = true;
         }
 
         private void Transmit()
         {
-            var animator = GameObject.FindWithTag("Agony").GetComponent<Animator>();
+            var animator = GetComponentInChildren<PostProcessVolume>().gameObject.GetComponent<Animator>();
             // ReSharper disable once Unity.PreferNonAllocApi
             var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
-            if (hitEnemies.Length > 0)
+            var enemy = hitEnemies[0];
+            if (enemy.GetComponentsInChildren<EnemyBar>()[1].health <= 30 || enemy.GetComponentsInChildren<EnemyBar>()[0].health <= 30)
             {
-                var enemy = hitEnemies[0];
-                EnemyBar[] bars = enemy.GetComponentsInChildren<EnemyBar>();
-                if (bars[1].health <= 30 || bars[0].health <= 30 && !enemy.GetComponent<EnemyController>().isDead)
+                if (enemy.CompareTag("DefaultEnemy"))
                 {
                     animator.SetTrigger(Agony);
-                    StartCoroutine(SpawnBody(GetBodyType(enemy.tag), enemy.gameObject));
+                    StartCoroutine(SpawnBody(0, enemy.gameObject));
+                }
+                else if (enemy.CompareTag("KunaiEnemy"))
+                {
+                    animator.SetTrigger(Agony);
+                    StartCoroutine(SpawnBody(1, enemy.gameObject));
+                }
+                else if (enemy.CompareTag("TankEnemy"))
+                {
+                    animator.SetTrigger(Agony);
+                    StartCoroutine(SpawnBody(2, enemy.gameObject));
                 }
             }
-            _transmit = false;
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator SpawnBody(int body, GameObject enemy)
         {
             yield return new WaitForSeconds(1f);
-
             var enemyTransform = enemy.transform;
             var enemyPosition = enemyTransform.position;
+            Instantiate(playerPrefabs[body], new Vector3(enemyPosition.x, enemyPosition.y + 1, enemyPosition.z),
+                enemyTransform.rotation);
+
             var playerTransform = transform;
             var playerPosition = playerTransform.position;
-            
-            GameObject newEnemy = Instantiate(enemyPrefabs[GetBodyType(gameObject.name)], playerPosition, playerTransform.rotation);
 
-            var tmpHealth = GetComponentInChildren<PlayerBar>().prevHealth;
+            GameObject newEnemy;
+            
+            if (gameObject.name.Contains("Default"))
+            {
+                newEnemy = Instantiate(enemyPrefabs[0], playerPosition, playerTransform.rotation);    
+            }
+            else if(gameObject.name.Contains("Kunai"))
+            {
+                newEnemy = Instantiate(enemyPrefabs[1], playerPosition, playerTransform.rotation);
+            }
+            else 
+            {
+                newEnemy = Instantiate(enemyPrefabs[2], playerPosition, playerTransform.rotation);
+            }
+            
+            var tmpHealth = GetComponentInChildren<PlayerBar>().health;
             
             yield return new WaitForEndOfFrame();
             
             newEnemy.GetComponentInChildren<EnemyBar>().SetHealth(tmpHealth);
 
-            Instantiate(playerPrefabs[body], new Vector3(enemyPosition.x, enemyPosition.y + 1, enemyPosition.z), enemyTransform.rotation)
-                .GetComponentInChildren<PlayerBar>()
-                .prevHealth = enemy.GetComponentInChildren<EnemyBar>().health;
             Destroy(enemy);
-            if(GameObject.FindWithTag("EnemyCounter"))
-                GameObject.FindWithTag("EnemyCounter").GetComponent<EnemyCounter>().enemies.Remove(enemy.GetComponent<EnemyController>());
             Destroy(gameObject);
-        }
-
-        private int GetBodyType(string s)
-        {
-            s = s.ToLower();
-            foreach (var (item, index) in _bodyTypes.Select((item, index) => (item, index)))
-            {
-                if (s.Contains(item)) return index;
-            }
-            return 0;
         }
 
         private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireSphere(attackPoint.position, attackRange);
         }
-        public void AddTime(int amount)
-        {
-            timeToChangeBody += amount;
-            timer.text = timeToChangeBody.ToString();
-        }
     }
-    
 }

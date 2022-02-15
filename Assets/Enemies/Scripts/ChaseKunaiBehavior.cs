@@ -1,36 +1,54 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChaseKunaiBehavior : StateMachineBehaviour
+namespace Enemies.Scripts
 {
-    private Transform _playerTransform;
-    private NavMeshAgent _agent;
-    private float _distance;
-    public float attackRange;
-    private static readonly int Attack = Animator.StringToHash("Attack");
-    private static readonly int Speed = Animator.StringToHash("Speed");
+    public class ChaseKunaiBehavior : StateMachineBehaviour
+    {
+        private Transform _playerTransform;
+        private NavMeshAgent _agent;
+        private float _distance;
+        public float attackRange;
+        public float avoidRange;
+        private static readonly int Attack = Animator.StringToHash("Attack");
+        private static readonly int Speed = Animator.StringToHash("Speed");
+        private static readonly int RangeToPlayer = Animator.StringToHash("RangeToPlayer");
 
-    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        if(GameObject.FindWithTag("Player"))
-            _playerTransform = GameObject.FindWithTag("Player").transform;
-        _agent = animator.GetComponentInParent<NavMeshAgent>();
-        _agent.stoppingDistance = 5;
-    }
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        if (_playerTransform)
+        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            var playerPosition = _playerTransform.position;
-            _distance = Vector3.Distance(animator.transform.position, playerPosition);
-            animator.SetFloat("DistanceToPlayer", _distance);
-            if (_distance > attackRange)
-                _agent.SetDestination(playerPosition);
-            if (_distance <= attackRange && _distance > 3)
+            _playerTransform = GameObject.FindWithTag("Player").transform;
+            _agent = animator.GetComponentInParent<NavMeshAgent>();
+        }
+    
+        public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            if (_playerTransform)
             {
-                animator.SetBool(Attack, true);
+                _distance = Vector3.Distance(animator.transform.position, _playerTransform.position);
+                if (_distance < avoidRange)
+                {
+                    _agent.destination = animator.transform.position - _playerTransform.position;
+                }
+                else
+                {
+                    _agent.destination = _playerTransform.position;
+                    if (_distance <= attackRange)
+                    {
+                        animator.SetBool(Attack, true);
+                    }
+                }
+                animator.SetFloat(Speed, _agent.velocity.magnitude);
+                animator.SetFloat(RangeToPlayer, _distance);
+            }
+            else
+            {
+                _playerTransform = GameObject.FindWithTag("Player").transform;
             }
         }
-        animator.SetFloat(Speed, _agent.velocity.magnitude);
+    
+        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+       
+        }
     }
 }
