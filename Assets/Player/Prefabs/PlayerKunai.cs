@@ -28,7 +28,7 @@ namespace Player.Prefabs
                 _audioSource.clip = targetOther;
                 _audioSource.Play();
             }
-            Destroy(gameObject, 10);
+            Destroy(gameObject, 0.2f);
         }
     }
 }
