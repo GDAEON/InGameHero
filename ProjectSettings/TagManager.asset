@@ -9,11 +9,6 @@ TagManager:
   - KunaiEnemy
   - TankEnemy
   - Kunai
-  - LvlChanger
-  - EnemyCounter
-  - TransmitCamera
-  - Agony
-  - TransmitVolume
   layers:
   - Default
   - TransparentFX
