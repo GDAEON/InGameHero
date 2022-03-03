@@ -267,7 +267,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -113, y: 375}
+  m_AnchoredPosition: {x: -113, y: 344}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &980888920078835042
@@ -659,7 +659,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transmitMaterial: {fileID: 2100000, guid: b7ee82ebe7405634787108f3a0afda7f, type: 2}
   transmitCamera: {fileID: 1991351647962595096}
+  staminaConsumption: 0
   moveSpeed: 4
+  sprintSpeed: 0
   cameraSensitivity: 15
   gravity: 9.81
   jumpPower: 5
