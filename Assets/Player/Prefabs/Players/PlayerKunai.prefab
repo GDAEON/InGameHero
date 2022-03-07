@@ -923,8 +923,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c705e686c1390614896dd5cce6879554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winScreen: {fileID: 0}
-  deathScene: {fileID: 0}
+  winScreen: {fileID: 769542408159521057}
+  deathScene: {fileID: 7373667611785479490}
 --- !u!95 &3213392331069779452
 Animator:
   serializedVersion: 4
