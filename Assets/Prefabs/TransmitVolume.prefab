@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2373608891469170152}
   m_Layer: 0
   m_Name: TransmitVolume
-  m_TagString: Agony
+  m_TagString: TransmitVolume
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,7 +60,7 @@ Animator:
   m_GameObject: {fileID: 6030799902596199576}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 60903f21f156e0a4ea538d1aaf8a13e2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 73b8ac724ffff5e42a6d03d401f875aa, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

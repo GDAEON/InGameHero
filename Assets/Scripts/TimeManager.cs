@@ -3,7 +3,7 @@ using UnityEngine.Serialization;
 
 public class TimeManager : MonoBehaviour
 {
-    private float slowFactor = 0.2f;
+    private float slowFactor = 0.5f;
 
     public void DoSlowmotion()
     {

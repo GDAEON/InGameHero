@@ -6,6 +6,7 @@ using Enemies.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 using Random = System.Random;
 
 namespace Player.Scripts
@@ -15,9 +16,11 @@ namespace Player.Scripts
         [Header("Transmit settings")]
         [SerializeField] private Material transmitMaterial;
         [SerializeField] private Camera transmitCamera;
-        
+
         [Header("Player settings")]
+        [SerializeField] private int staminaConsumption;
         [SerializeField] private float moveSpeed;
+        [SerializeField] private float sprintSpeed;
         [SerializeField] private float cameraSensitivity;
         [SerializeField] private float gravity = 9.81f;
         [SerializeField] private float jumpPower;
@@ -37,9 +40,12 @@ namespace Player.Scripts
         [SerializeField] private GameObject[] playerPrefabs;
         [SerializeField] private GameObject[] enemyPrefabs;
 
+        private bool _isRunning;
+        private float _speed;
+        private Ray _ray;
+        private Collider _selectedEnemy;
         private List<string> _bodyTypes;
         private bool _transmit = false;
-        private float _fumble;
         private InputActionReference _actionReference;
         private TimeManager _timeManager = new TimeManager();
         private CharacterController _controller;
@@ -55,7 +61,6 @@ namespace Player.Scripts
         private static readonly int Hit = Animator.StringToHash("Hit");
         private static readonly int AttackTrigger = Animator.StringToHash("Attack");
         private static readonly int JumpTrigger = Animator.StringToHash("Jump");
-        private static readonly int FumbleSpeed = Shader.PropertyToID("_FumbleSpeed");
         private static readonly int TransmitEnter = Animator.StringToHash("TransmitEnter");
         private static readonly int TransmitExit = Animator.StringToHash("TransmitExit");
 
@@ -69,6 +74,21 @@ namespace Player.Scripts
         public void OnMove(InputAction.CallbackContext context)
         {
             _mMove = context.ReadValue<Vector2>();
+        }
+
+        public void OnSprint(InputAction.CallbackContext context)
+        {
+            if (context.phase == InputActionPhase.Started)
+            {
+                _speed = sprintSpeed;
+                _isRunning = true;
+            }
+
+            if (context.phase == InputActionPhase.Canceled)
+            {
+                _speed = moveSpeed;
+                _isRunning = false;
+            }
         }
 
         public void OnJump(InputAction.CallbackContext context)
@@ -97,7 +117,6 @@ namespace Player.Scripts
         {
             if (context.phase == InputActionPhase.Started)
             {
-                _fumble = 1;
                 _camera.enabled = false;
                 transmitCamera.enabled = true;
                 _transmit = true;
@@ -110,7 +129,10 @@ namespace Player.Scripts
             {
                 _camera.enabled = true;
                 transmitCamera.enabled = false;
-                Transmit();
+                _transmit = false;
+                if(_selectedEnemy)
+                    Transmit(_selectedEnemy);
+                _selectedEnemy = null;
                 _timeManager.ResetTimeScale();
                 var animator = GameObject.FindWithTag("TransmitVolume").GetComponent<Animator>();
                 animator.SetTrigger(TransmitExit);
@@ -122,7 +144,7 @@ namespace Player.Scripts
             _animator = GetComponentInChildren<Animator>();
             _camera = GetComponentInChildren<Camera>();
             _controller = GetComponent<CharacterController>();
-
+            _speed = moveSpeed;
             // Lock cursor
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -137,14 +159,25 @@ namespace Player.Scripts
             StartCoroutine(ReduceTime());
         }
 
-        public void Update()
+        public void FixedUpdate()
         {
             if (_transmit)
             {
-                _fumble += 0.1f;
-                transmitMaterial.SetFloat(FumbleSpeed, _fumble);
+                _ray = new Ray(_camera.transform.position, _camera.transform.forward * 5);
+                RaycastHit hit;
+                if (Physics.Raycast(_ray, out hit, 4, enemyLayer))
+                {
+                    _selectedEnemy = hit.collider;
+                    _selectedEnemy.gameObject.GetComponent<EnemyController>().Selected();
+                }
+                else if (_selectedEnemy != null)
+                {
+                    _selectedEnemy.gameObject.GetComponent<EnemyController>().Deselected();
+                    _selectedEnemy = null;
+                }
             }
-
+            if(_isRunning)
+                staminaBar.TakeDamage(staminaConsumption);
             if (healthBar.health <= 0)
                 gameObject.GetComponent<EndGameScript>().SetupDeathScreen();
             Look(_mLook);
@@ -178,8 +211,8 @@ namespace Player.Scripts
             var move = Quaternion.Euler(0, _camera.transform.eulerAngles.y, 0) *
                        new Vector3(_mMove.x, 0, _mMove.y);
 
-            _velocity.x = move.x * moveSpeed;
-            _velocity.z = move.z * moveSpeed;
+            _velocity.x = move.x * _speed;
+            _velocity.z = move.z * _speed;
 
             _velocity.y -= gravity * Time.deltaTime;
             _controller.Move(_velocity * Time.deltaTime);
@@ -189,7 +222,7 @@ namespace Player.Scripts
         {
             if (direction.sqrMagnitude < 0.01)
                 return;
-            var scaledMoveSpeed = moveSpeed * Time.deltaTime;
+            var scaledMoveSpeed = _speed * Time.deltaTime;
 
             var move = Quaternion.Euler(0, _camera.transform.eulerAngles.y, 0) *
                        new Vector3(direction.x, 0, direction.y);
@@ -255,22 +288,16 @@ namespace Player.Scripts
             _canAttack = true;
         }
 
-        private void Transmit()
+        private void Transmit(Collider enemy)
         {
-            var animator = GameObject.FindWithTag("Agony").GetComponent<Animator>();
-            // ReSharper disable once Unity.PreferNonAllocApi
-            var hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
-            if (hitEnemies.Length > 0)
+            EnemyBar[] bars = enemy.GetComponentsInChildren<EnemyBar>();
+            if (bars[1].health <= 30 || bars[0].health <= 30 && !enemy.GetComponent<EnemyController>().isDead)
             {
-                var enemy = hitEnemies[0];
-                EnemyBar[] bars = enemy.GetComponentsInChildren<EnemyBar>();
-                if (bars[1].health <= 30 || bars[0].health <= 30 && !enemy.GetComponent<EnemyController>().isDead)
-                {
-                    animator.SetTrigger(Agony);
-                    StartCoroutine(SpawnBody(GetBodyType(enemy.tag), enemy.gameObject));
-                }
+                var animator = GameObject.FindWithTag("Agony").GetComponent<Animator>();
+                enemy.GetComponentInChildren<VisualEffect>().GetComponent<Animator>().SetTrigger("Transmit");
+                animator.SetTrigger(Agony);
+                StartCoroutine(SpawnBody(GetBodyType(enemy.tag), enemy.gameObject));
             }
-            _transmit = false;
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
